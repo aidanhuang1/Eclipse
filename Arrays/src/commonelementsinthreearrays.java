@@ -12,7 +12,7 @@ public class commonelementsinthreearrays {
 		int ar3[] = {3, 4, 15, 20, 30, 70, 80, 120};
 		
 		int a = 0, b = 0, c = 0;
-		
+		System.out.println(a);
 
 	}
 
