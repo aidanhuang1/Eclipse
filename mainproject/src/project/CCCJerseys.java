@@ -5,6 +5,7 @@ public class CCCJerseys {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+
 		Scanner sc = new Scanner(System.in);
 		int J = sc.nextInt(), A = sc.nextInt(), count = 0;
 		int[] jerseys = new int [1000001];
@@ -30,12 +31,10 @@ public class CCCJerseys {
 			} else if (size=='L') {
 				jerseysize = 3;
 			}
-			for (int j=1; j<=J; j++) {
-				if (j==number && jerseysize<=jerseys[j]) {
-					count++;
-					jerseys[j] = 0;
-					break;
-				}
+			
+			if (jerseys[number]!=0 && jerseysize<=jerseys[number]) {
+				count++;
+				jerseys[number] = 0;
 			}
 
 		}

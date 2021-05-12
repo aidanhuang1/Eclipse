@@ -11,10 +11,6 @@ public class testclass {
 		System.out.println(a[++i]);
 		System.out.println(i);
 		
-		
-		
-		
-		
 
 	}
 
