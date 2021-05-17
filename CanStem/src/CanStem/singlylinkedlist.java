@@ -115,13 +115,13 @@ public class singlylinkedlist<E> {
 	//removeAll remove all items with value
 
 	public void removeAll(E val) {
-		node temp = this.head; 
+		node<E> temp = this.head; 
 		if (temp.getValue().equals(val)) {
 			this.head = this.head.getNext();
 		} 
 		for (int i=1; i<size; i++) {
 			if (temp.getNext().equals(val)) {
-				node next = temp.getNext();
+				node<E> next = temp.getNext();
 				temp.setNext(next.getNext());
 				this.size--;
 			} else {
@@ -133,7 +133,7 @@ public class singlylinkedlist<E> {
 	//reverse the list
 
 	public void reverse() {
-		node rev = null;
+		node<E> rev = null;
 		for (int j=0; j<this.size; j++) {
 			node temp = this.head;
 			for (int i=this.size-1; i>0; i--) {
@@ -159,7 +159,7 @@ public class singlylinkedlist<E> {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }
