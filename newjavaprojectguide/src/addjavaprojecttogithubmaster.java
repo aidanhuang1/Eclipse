@@ -8,4 +8,6 @@ public class addjavaprojecttogithubmaster {
 	//Delete the .profile of the /git/Eclipse folder
 	//Refresh and the error should go away
 	//Add
+	
+	//You may have to delete the entire git folder and reimport it from github
 }
