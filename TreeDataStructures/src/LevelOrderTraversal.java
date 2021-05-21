@@ -14,7 +14,7 @@ public class LevelOrderTraversal {
 			this.right = null;
 		}
 	}
-	
+
 	public static void LevelOrder(Node root) {
 		if (root==null) {
 			return;

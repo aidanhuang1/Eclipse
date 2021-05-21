@@ -13,6 +13,9 @@ public class HashTables {
 		System.out.println(ht.get(3));
 		ht.remove(3);
 		System.out.println(ht.get(3));
+		
+		
+		
 	}
 
 }

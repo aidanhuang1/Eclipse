@@ -2,73 +2,66 @@ import java.util.*;
 
 import java.io.*;
 public class BreadthFirstSearch {
-//	static Node root;
-//	public static class Node {
-//		int data;
-//		Node left;
-//		Node right;
-//		
-//		public Node (int data) {
-//			this.data = data;
-//			left = null;
-//			right = null;
-//		}
-//	}
-//	
-	private static int V; //Number of vertices
-	private static LinkedList<Integer> adj[]; //Adjacency Lists
-	
-	//Create a graph
-	BreadthFirstSearch(int v) {
-		V = v;
-		adj = new LinkedList[v];
-		for (int i=0; i<v; ++i) {
-			adj[i] = new LinkedList();
+
+	public static class Node {
+		int data;
+		Node left;
+		Node right;
+
+		public Node (int data) {
+			this.data = data;
+			left = null;
+			right = null;
 		}
 	}
 	
-	//Add edges to the graph
-	void addEdge(int v, int w) {
-		adj[v].add(w);
-	}
-	
+
 	//BFS algorithm
-	public static void BFS(int s) {
-		boolean visited[] = new boolean[V];
-		Queue<Integer> queue = new LinkedList<>();
-		queue.add(s);
-		visited[s] = true;
-		
-		
-		while (!queue.isEmpty()) {
-			s = queue.poll();
-			System.out.println(s + " ");
-			Iterator<Integer> i = adj[s].listIterator();
-			while (i.hasNext()) {
-				int n = i.next();
-				if (!visited[n]) {
-					visited[n] = true;
-					queue.add(n);
+	public static List<List<Integer>> BFS(Node node) {
+		Queue<Node> queue = new LinkedList<>(); 
+		List<List<Integer>> list = new ArrayList<>();
+		queue.add(node);
+
+		while(!queue.isEmpty()) {
+			List<Integer> l = new ArrayList<>();
+			int size = queue.size();
+			for (int i=0; i<size; i++) {
+				node = queue.poll();
+				l.add(node.data);
+
+				if (node.left!=null) {
+					queue.add(node.left);
+				}
+				if (node.right!=null) {
+					queue.add(node.right);
 				}
 			}
-		}	
+			list.add(l);
+		}
+		return list;
+
 	}
+
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
-		
-		BreadthFirstSearch g = new BreadthFirstSearch(4);
-		g.addEdge(0, 1);
-	    g.addEdge(0, 2);
-	    g.addEdge(1, 2);
-	    g.addEdge(2, 0);
-	    g.addEdge(2, 3);
-	    g.addEdge(3, 3);
 
-	    System.out.println("Following is Breadth First Traversal " + "(starting from vertex 2)");
+		Node node1 = new Node(0);
+		Node node2 = new Node(1);
+		Node node3 = new Node(2);
+		Node node4 = new Node(3);
+		Node node5 = new Node(4);
+		Node node6 = new Node(5);
 
-	    g.BFS(2);
+		node1.left = node2;
+		node1.right = node3;
+		node2.left = node4;
+		node2.right = node5;
+		node3.left = node6;	
+
+		System.out.println(BreadthFirstSearch.BFS(node1));
 
 	}
 
