@@ -1,49 +1,101 @@
-import java.util.*;
+// Java program to print BFS traversal from a given source vertex.
+// BFS(int s) traverses vertices reachable from s.
 import java.io.*;
-public class BreadthFirstSearch2 { //INCOMPLETE
+import java.util.*;
 
-	public static class Node {
-		int data;
-		Node left;
-		Node right;
-		LinkedList<Node> adjacent = new LinkedList<Node>();
-		
-		public Node (int data) {
-			this.data = data;
-			left = null;
-			right = null;
+// This class represents a directed BreadthFirstSearch2 using adjacency list
+// representation
+public class BreadthFirstSearch2 {
+	private static int V;   // No. of vertices
+	private static LinkedList<Integer> adj[]; //Adjacency Lists
+
+	// Constructor
+	static class Graph {
+		Graph(int v) {
+			V = v;
+			adj = new LinkedList[v];
+			for (int i=0; i<v; ++i)
+				adj[i] = new LinkedList();
+		}
+
+
+		// Function to add an edge into the BreadthFirstSearch2
+		void addEdge(int v,int w)
+		{
+			adj[v].add(w);
+		}
+
+		// prints BFS traversal from a given source s
+		void BFS(int s)
+		{
+			// Mark all the vertices as not visited(By default
+			// set as false)
+			boolean visited[] = new boolean[V];
+
+			// Create a queue for BFS
+			LinkedList<Integer> queue = new LinkedList<Integer>();
+
+			// Mark the current node as visited and enqueue it
+			visited[s]=true;
+			queue.add(s);
+
+			while (!queue.isEmpty()) {
+				// Dequeue a vertex from queue and print it
+				s = queue.poll();
+				System.out.print(s+" ");
+
+				// Get all adjacent vertices of the dequeued vertex s
+				// If a adjacent has not been visited, then mark it
+				// visited and enqueue it
+				Iterator<Integer> i = adj[s].listIterator();
+				while (i.hasNext())
+				{
+					int n = i.next();
+					if (!visited[n])
+					{
+						visited[n] = true;
+						queue.add(n);
+					}
+				}
+			}
 		}
 	}
+	// Driver method to
+	public static void main(String args[]) {
+		Graph g = new Graph(5);
 
-	public static boolean BFS(Node source, Node destination) { //INCOMPLETE
-		Queue<Node> nexttovisit = new LinkedList<>();
-		HashSet<Integer> visited = new HashSet<>();
-		nexttovisit.add(source);
-		while(!nexttovisit.isEmpty()) {
-			Node node = nexttovisit.remove();
-			if (node == destination) {
-				return true;
-			}
-			if (visited.contains(node.data)) {
-				continue;
-			}
-			visited.add(node.data);
-			for (Node child : node.adjacent) {
-				nexttovisit.add(child);
-			}
-		}
-		return false;
-		
+		/*g.addEdge(0, 1);
+        g.addEdge(0, 2);
+        g.addEdge(1, 2);
+        g.addEdge(2, 0);
+        g.addEdge(2, 3);
+        g.addEdge(3, 3);*/
+
+		g.addEdge(0,1);
+		g.addEdge(0,4);
+		g.addEdge(1, 2);
+		g.addEdge(1, 3);
+		g.addEdge(1, 4);
+		g.addEdge(2, 3);
+		g.addEdge(3, 4);
+
+
+
+
+
+
+		System.out.println("Following is Breadth First Traversal "+
+				"(starting from vertex 0)");
+
+		g.BFS(0);
+
+
 	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in)	;
-
-		Node node1 = new Node(0);
-		Node node2 = new Node(1);
-		node1.left = node2;
-		System.out.println(BFS(node1, node2));
-	}
-
 }
+/*
+ * 0-------1\
+ * |       |  \ 2
+ * |       |  /
+ * 4-------3/
+ *
+ * */

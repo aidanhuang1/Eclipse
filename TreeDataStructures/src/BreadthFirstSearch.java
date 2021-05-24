@@ -2,7 +2,7 @@ import java.util.*;
 
 import java.io.*;
 public class BreadthFirstSearch {
-
+ 
 	public static class Node {
 		int data;
 		Node left;
@@ -17,6 +17,7 @@ public class BreadthFirstSearch {
 	
 
 	//BFS algorithm
+	//This BFS algorithm returns a 2d List and has a node as a parameter
 	public static List<List<Integer>> BFS(Node node) {
 		Queue<Node> queue = new LinkedList<>(); 
 		List<List<Integer>> list = new ArrayList<>();
@@ -25,9 +26,9 @@ public class BreadthFirstSearch {
 		while(!queue.isEmpty()) {
 			List<Integer> l = new ArrayList<>();
 			int size = queue.size();
-			for (int i=0; i<size; i++) {
-				node = queue.poll();
-				l.add(node.data);
+			for (int i=0; i<size; i++) { //we loop through the size of the queue because that is
+				node = queue.poll();	//the amount of nodes in that level
+				l.add(node.data);		//once we are out of the for loop we start a new level by making a new list
 
 				if (node.left!=null) {
 					queue.add(node.left);
@@ -56,7 +57,7 @@ public class BreadthFirstSearch {
 		Node node6 = new Node(5);
 
 		node1.left = node2;
-		node1.right = node3;
+		node1.right = node3;	
 		node2.left = node4;
 		node2.right = node5;
 		node3.left = node6;	
