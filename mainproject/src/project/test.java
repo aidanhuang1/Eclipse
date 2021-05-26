@@ -10,6 +10,9 @@ public class test {
 		list.add(9);
 		System.out.println(list.remove(0));
 		
+		
+		System.out.println((temp1+1)+" "+(temp2+1)+"   "+value);
+
 	}
 
 }

@@ -7,9 +7,11 @@ public class testbufferedreader {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int a = Integer.parseInt(br.readLine());
+		int a = Integer.parseInt(br.readLine().);
+		int c = Integer.parseInt(br.readLine());
 		String b = br.readLine();
 		System.out.println(a);
+		System.out.println(c);
 		System.out.println(b);
 	}
 
