@@ -1,6 +1,7 @@
+package project;
 import java.util.*;
 import java.io.*;
-public class Main {
+public class CCCStrategicBombing2 {
 	
 	private int n, id;
 	private int[] low, ids;
@@ -9,7 +10,7 @@ public class Main {
 	private List<List<Integer>> graph;
 	private List<Integer> bridges;
 
-	public Main(List<List<Integer>> graph, int n) {
+	public CCCStrategicBombing2(List<List<Integer>> graph, int n) {
 		if (graph == null || n <= 0 || graph.size() != n) {
 			throw new IllegalArgumentException();
 		}
@@ -57,7 +58,7 @@ public class Main {
 		visited[at] = true;
 		low[at] = ids[at] = ++id;
 
-		for (Integer to : graph.get(at)) {
+		for (int to : graph.get(at)) {
 			if (to == parent) continue;
 			if (!visited[to]) {
 				dfs(to, at, bridges);
@@ -90,7 +91,7 @@ public class Main {
 		}
 		
 
-		Main solver = new Main(graph, n);
+		CCCStrategicBombing2 solver = new CCCStrategicBombing2(graph, n);
 		List<Integer> bridges = solver.findBridges();
 
 
