@@ -51,7 +51,7 @@ public class BridgesandArticulationpoints { //Bridges version
 		// Finds all bridges in the graph across various connected components.
 		for (int i = 0; i < n; i++) {
 			if (!visited[i]) {
-				dfs(i, -1, bridges);
+				dfs(i, -1, bridges); //-1 because there is no previous node
 			}
 		}
 
@@ -61,20 +61,23 @@ public class BridgesandArticulationpoints { //Bridges version
 
 	private void dfs(int at, int parent, List<Integer> bridges) {
 
-		visited[at] = true;
-		low[at] = ids[at] = ++id;
+		visited[at] = true; //we have visited this node
+		id++;
+		low[at] = ids[at] = id; //increment as the low value becomes the id of the node
 
-		for (Integer to : graph.get(at)) {
-			if (to == parent) continue;
+		for (int to: graph.get(at)) { //looking for nodes that we can go to 
+			if (to == parent) {
+				continue;
+			}
 			if (!visited[to]) {
-				dfs(to, at, bridges);
-				low[at] = Math.min(low[at], low[to]);
-				if (ids[at] < low[to]) {
+				dfs(to, at, bridges); //if a node we can go to has not been visited, we recursively call DFS
+				low[at] = Math.min(low[at], low[to]); //if the to node is smaller, then we make our at node the same
+				if (ids[at] < low[to]) { //if the current id is smaller than the low-link value of the node we are going to, then we have a bridge
 					bridges.add(at);
 					bridges.add(to);
 				}
-			} else {
-				low[at] = Math.min(low[at], ids[to]);
+			} else { //if we find a node we already went to 
+				low[at] = Math.min(low[at], ids[to]); //we make the low-link value equal to our parent node
 			}
 		}
 	}
