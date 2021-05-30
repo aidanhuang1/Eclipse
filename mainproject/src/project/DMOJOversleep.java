@@ -5,42 +5,39 @@ public class DMOJOversleep {
 	public static int time = 0;
 	public static boolean found = false;
 	public static int[] s_pos = new int[2]; //starting
-	public static int[] e_pos = new int[2]; //destination
-	public static int i =s_pos[0];
-	public static int j =s_pos[1];
+
 	public static int search(char[][] map, int n, int m) {		
-
+		Queue<Integer> queuei = new LinkedList<Integer>();
+		Queue<Integer> queuej = new LinkedList<Integer>();
+		queuei.add(s_pos[0]);
+		queuej.add(s_pos[1]);
+		int count = 0;
 		
-//		for (int xy=0; xy<n*m; xy++) {
-		BFS(map, i, j, n, m);
-
-
-//			if (found) {
-//				return time;
-//			}
-//		}
-		return time;
-	}
-
-	public static void BFS(char[][] map, int i, int j, int n, int m) {
-		if (i>=n||i<0||j>=m||j<0||map[i][j]=='X') {
-			return;
+		while (!queuei.isEmpty()) {
+			int size = queuei.size();
+			for (int i=0; i<size; i++) {
+				int tempi = queuei.poll();
+				int tempj = queuej.poll();
+				if (tempi>=n||tempi<0||tempj>=m||tempj<0||map[tempi][tempj]=='X') {
+					continue;
+				}
+				if (map[tempi][tempj]=='e') {
+					return count;
+				}
+				map[tempi][tempj] = 'X';
+				queuei.add(tempi+1);
+				queuej.add(tempj);
+				queuei.add(tempi-1);
+				queuej.add(tempj);
+				queuei.add(tempi);
+				queuej.add(tempj-1);
+				queuei.add(tempi);
+				queuej.add(tempj+1);
+			}
+			count++;
 		}
-		if (map[i][j]=='e' || found==true) {
-			found = true;
-			return;
-		}
-		
-
-		BFS(map, i+1, j, n, m);
-		BFS(map, i, j+1, n, m);
-		BFS(map, i-1, j, n, m);
-		BFS(map, i, j-1, n, m);
-		time++;
-//		return true;
+		return 0;
 	}
-
-
 
 
 
@@ -56,10 +53,6 @@ public class DMOJOversleep {
 				if (temp[j].charAt(0)=='s') {
 					s_pos[0] = i;
 					s_pos[1] = j;
-				}
-				if (temp[j].charAt(0)=='e') {
-					e_pos[0] = i;
-					e_pos[1] = j;
 				}
 			}
 		}
