@@ -33,8 +33,8 @@ public class PriorityQueues {
         
         pQueuereverse.add(10); //tail
         pQueuereverse.add(20);
-        pQueuereverse.add(30);
-        pQueuereverse.add(40); //head
+        pQueuereverse.add(40);
+        pQueuereverse.add(30); //head
         
         System.out.println();
         System.out.println(pQueuereverse.poll());
