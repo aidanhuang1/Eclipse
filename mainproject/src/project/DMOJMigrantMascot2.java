@@ -2,7 +2,9 @@ package project;
 import java.util.*;
 import java.io.*;
 
-public class DMOJMigrantMascot  {  //maybe look into something similar to dijkstra's? 
+
+
+public class DMOJMigrantMascot  {
 	static class Edge implements Comparable<Edge>{
 		int to;
 		int weight;
@@ -16,52 +18,46 @@ public class DMOJMigrantMascot  {  //maybe look into something similar to dijkst
 			return 0;
 		}
 	}
-	static class path implements Comparator<Edge> {
-		@Override
-		public int compare(Edge o1, Edge o2) {
-			// TODO Auto-generated method stub
-			if (o1.weight < o2.weight) {
-				return 1;	
-			} else if (o1.weight > o2.weight) {
-				return -1;
-			}
-			return 0;
-		}
-	}
+
+	//Molly will only know a path by its lowest weight. But Molly will choose the path with the greatest weight at the end.
 
 	public static void search(ArrayList<Edge>[] list, int N, int M) {
-		boolean[] visited = new boolean[N];
+		boolean[] visited = new boolean[N]; // all paths we have found for a node
 
-		int[] lowestpaths = new int[N];
-		Arrays.fill(lowestpaths, Integer.MAX_VALUE);
-		lowestpaths[0] = 0;
-
-		PriorityQueue<Edge> queue = new PriorityQueue<Edge>(new path());
-		visited[0] = true;
-		for (Edge j: list[0]) {
-			lowestpaths[j.to] = Math.min(lowestpaths[j.to], j.weight);
-
-			if (!visited[j.to]) {
-				queue.add(new Edge(j.to, j.weight));
-			} 
-		}
-		while (!queue.isEmpty()) {
-			Edge edge = queue.poll();
-			visited[edge.to] = true;
-
-			lowestpaths[edge.to] = Math.min(lowestpaths[edge.to], edge.weight);
-
-			for (Edge k: list[edge.to]) {
-				if (!visited[k.to]) {
-					queue.add(new Edge(k.to, k.weight));
+		for (int i=0; i<N; i++) {
+			int min = Integer.MAX_VALUE;
+			boolean[] tempvisited = new boolean[N];	
+			if (i==0) {
+				System.out.println(0);
+			} else {
+				PriorityQueue<Edge> queue = new PriorityQueue<Edge>();
+				tempvisited[0] = true;
+				for (Edge j: list[0]) {
+					if (!tempvisited[j.to]) {
+						queue.add(new Edge(j.to, j.weight));
+						min = Math.min(j.weight, min);
+					} 
 				}
-			}
-		}
-		for (int i: lowestpaths) {
-			System.out.println(i);
-		}
+				while (!queue.isEmpty()) {
+					Edge edge = queue.poll();
+					tempvisited[edge.to] = true;
+					min = Math.min(edge.weight, min);
+					for (Edge k: list[edge.to]) {
+						if (!tempvisited[k.to]) {
+							queue.add(new Edge(k.to, k.weight));
+						}
+					}
+				}
 
+			}
+			visited[i] = true;
+			System.out.println(min);
+
+		}
 	}
+
+
+
 
 
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -82,6 +78,13 @@ public class DMOJMigrantMascot  {  //maybe look into something similar to dijkst
 		search(list, N, M);
 
 	}
+
+
+
+
+
+
+
 
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())

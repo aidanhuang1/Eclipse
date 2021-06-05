@@ -2,14 +2,8 @@ package project;
 import java.util.*;
 import java.io.*;
 
-
-
-public class CCCTruckingTroubles {
-	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	static StringTokenizer st;
-	public static boolean solved;
-	
-	static class Edge implements Comparable<Edge> { //what does this implement thing do?
+public class CCCTruckingTroubles { 
+	static class Edge implements Comparable<Edge> { 
 		public int to;
 		public int weight;
 		public Edge(int to, int weight) {
@@ -23,71 +17,70 @@ public class CCCTruckingTroubles {
 		}
 	}
 
-	private static boolean Prims(int n, ArrayList<Edge>[] list) {
-		int minCostSum = 0;
-		if (solved) {
-			return true;
+	static class Road implements Comparator<Edge> {
+		@Override
+		public int compare(Edge o1, Edge o2) {
+			// TODO Auto-generated method stub
+			if (o1.weight < o2.weight) {
+				return 1;	
+			} else if (o1.weight > o2.weight) {
+				return -1;
+			}
+			return 0;
 		}
-		solved = true;
+	}
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static StringTokenizer st;
+	public static int c, r, d;
 
-		int m = n - 1; //number of edges in MST to be expected
-		int edgeCount = 0; //number of edges we current have in the MST
-		PriorityQueue<Edge> pq = new PriorityQueue<Edge>();
-		
-		
-		boolean[] visited = new boolean[n];
-		Edge[] mstEdges = new Edge[m]; 
+	public static void Prims(int n, ArrayList<Edge>[] list, int[] dest) {
+		boolean[] visited = new boolean[n]; 
+		int[] MSTedges = new int[r];
+
+		PriorityQueue<Edge> routes = new PriorityQueue<Edge>(new Road());
 
 		visited[0] = true;
-		for (Edge e : list[0]) {
+		for (Edge e : list[0]) { 
 			if (!visited[e.to]) {
-				pq.add(e);
-			}
+				routes.add(new Edge(e.to, e.weight));
+			} 
 		}
-		for (Edge i: pq) {
-			System.out.println(i.weight);
-		}
-		System.out.println();
-		System.out.println(pq.peek().weight);
+		while (!routes.isEmpty()) {
+			Edge edge = routes.poll();
+			int next = edge.to;
 
-		while (!pq.isEmpty() && edgeCount != m) {
-			
-			Edge edge = pq.poll();
-			int nodeIndex = edge.to;
-
-			if (visited[nodeIndex]) {
+			if (visited[next]) {
 				continue;
 			}
 
-			mstEdges[edgeCount++] = edge;
-			minCostSum += edge.weight;
+			MSTedges[edge.to] = edge.weight;
 
-			visited[nodeIndex] = true;
-			for (Edge e : list[nodeIndex]) {
+			for (Edge e : list[next]) {				
+				visited[next] = true;
 				if (!visited[e.to]) {
-					pq.add(e);
-				}
+					routes.add(new Edge(e.to, e.weight));
+				} 
+			}
+		}
+		int min = Integer.MAX_VALUE;
+		for (int i=0; i<d; i++) {
+			if (MSTedges[dest[i]]<min) {
+				min = MSTedges[dest[i]];
 			}
 		}
 
-		if (edgeCount == m) {
-			System.out.println();
-			for (Edge i: mstEdges) {
-				System.out.println(i.weight);
-			}
-			return true;
-		}
-		return false;
+		System.out.println(min);
 	}
-
-
 
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
-		int c = readInt(), r = readInt(), d = readInt(); //c = # of cities, r = # of roads, d = # of dcities
+		c = readInt();
+		r = readInt();
+		d = readInt();
 		ArrayList<Edge>[] list = new ArrayList[c];
+		int[] dest = new int[d];
 		for (int i=0; i<list.length; i++) {
 			list[i] = new ArrayList<Edge>();
 		}
@@ -97,35 +90,11 @@ public class CCCTruckingTroubles {
 			list[x].add(new Edge(y, w));
 			list[y].add(new Edge(x, w));
 		}
-
-		
-		System.out.println(Prims(c, list));
-
-
-
-//		int dw = 0;
-//		for (ArrayList<Edge> i: list) {
-//			System.out.print(dw++ +" --> ");
-//			for (int j=0; j<i.size(); j++) {
-//				System.out.print(i.get(j).weight+" ");
-//			}
-//			System.out.println();
-//		}
-	
+		for (int i=0; i<d; i++) {
+			dest[i] = readInt()-1;
+		}
+		Prims(c, list, dest);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
