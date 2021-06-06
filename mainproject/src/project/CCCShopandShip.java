@@ -2,21 +2,14 @@ package project;
 import java.util.*;
 import java.io.*;
 
-public class CCCShopandShip {
+public class CCCShopandShip { //This is the adjacency list method, TLEs for the last two test cases
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static ArrayList<Edge>[] list;
 	static int[] cost;
-	static int N, T;
-	
-	//NOTE THAT WE CAN START FROM ANY CITY BUT WE MUST END UP AT THE DESTINATION CITY
-	//So then after we have found our distances using dijkstra, we iterate through
-	//all the cities, keeping track of our totalcost (pencilcost + shippingcost) for the minimum cost
-	//
-	
-	//SOMETHING IS PROBABLY WRONG WITH THE DIJKSTRA METHOD
-	
-	
+	static int[] store;
+	static int N, T, K;
+
 	static class Edge implements Comparable<Edge> {
 		public int to;
 		public int weight;
@@ -27,21 +20,9 @@ public class CCCShopandShip {
 		@Override
 		public int compareTo(Edge o) {
 			// TODO Auto-generated method stub
-			return 0;
+			return weight-o.weight;
 		}
-	}
-	
-	static class Road implements Comparator<Edge> {
-		@Override
-		public int compare(Edge o1, Edge o2) {
-			// TODO Auto-generated method stub
-			if (o1.weight < o2.weight) {
-				return -1;	
-			} else if (o1.weight > o2.weight) {
-				return 1;
-			}
-			return 0;
-		}
+		
 	}
 
 	public static void Dijkstra(int start) {
@@ -49,43 +30,37 @@ public class CCCShopandShip {
 		int[] dist = new int[N+1];
 		Arrays.fill(dist, Integer.MAX_VALUE);
 		dist[start] = 0;
-		PriorityQueue<Edge> pq = new PriorityQueue<Edge>(new Road());
+		PriorityQueue<Edge> pq = new PriorityQueue<Edge>();
 		pq.add(new Edge(start, 0));
 
 		while(!pq.isEmpty()) {
-			
-			Edge temp = pq.poll(); //current node
+			Edge temp = pq.poll();
+			System.out.println(temp.weight);
 			visited[temp.to] = true;
-			
 			if (dist[temp.to] < temp.weight) {
 				continue;	
 			}
-			
 			for (Edge i: list[temp.to]) {
 				if (!visited[i.to]) {
-					
-					int newDist = dist[temp.to] + i.weight; //temp.to = current, i.to = next
-					if (newDist < dist[i.to]) {
+					int newDist = dist[temp.to] + i.weight;
+					if (dist[i.to] > newDist) {
 						dist[i.to] = newDist;
 						pq.add(new Edge(i.to, newDist));
 					}
 				}
 			}
 		}
+
 		int min = Integer.MAX_VALUE;
-		for (int i=0; i<dist.length; i++) {
-			int totalcost = cost[i]+dist[i];
-			System.out.println(dist[i]);
-			if (min > totalcost) {
-				min = totalcost;
-			}
+		for (int i=0; i<K; i++) {
+			min = Math.min(min, cost[i] + dist[store[i]]);
 		}
 		System.out.println(min);
 	}
-	
+
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in);	
 		N = readInt();
 		T = readInt();
 		list = new ArrayList[N+1];
@@ -93,18 +68,22 @@ public class CCCShopandShip {
 			list[i] = new ArrayList<Edge>();
 		}
 		for (int i=0; i<T; i++) {
-			int x = readInt()-1, y = readInt()-1, weight = readInt();
-			list[x].add(new Edge(y, weight));
-			list[y].add(new Edge(x, weight));
-			
+			int x = readInt(), y = readInt(), weight = readInt();
+			if (x >= 1 && x <= N && y >= 1 && y <= N) {
+				list[x].add(new Edge(y, weight));
+				list[y].add(new Edge(x, weight));
+			}
 		}
-		int K = readInt();
+		K = readInt();
 		cost = new int[N+1];
+		store = new int[N+1];
 		for (int i=0; i<K; i++) {
-			cost[readInt()-1] = readInt();
+			store[i] = readInt();
+			cost[i] = readInt();
+
+
 		}
-		
-		int destination = readInt()-1;
+		int destination = readInt();
 		Dijkstra(destination);
 	}
 

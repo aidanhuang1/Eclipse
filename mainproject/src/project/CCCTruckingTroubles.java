@@ -13,22 +13,10 @@ public class CCCTruckingTroubles {
 		@Override
 		public int compareTo(Edge o) {
 			// TODO Auto-generated method stub
-			return 0;
+			return o.weight-weight;
 		}
 	}
 
-	static class Road implements Comparator<Edge> {
-		@Override
-		public int compare(Edge o1, Edge o2) {
-			// TODO Auto-generated method stub
-			if (o1.weight < o2.weight) {
-				return 1;	
-			} else if (o1.weight > o2.weight) {
-				return -1;
-			}
-			return 0;
-		}
-	}
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	public static int c, r, d;
@@ -37,7 +25,7 @@ public class CCCTruckingTroubles {
 		boolean[] visited = new boolean[n]; 
 		int[] MSTedges = new int[r];
 
-		PriorityQueue<Edge> routes = new PriorityQueue<Edge>(new Road());
+		PriorityQueue<Edge> routes = new PriorityQueue<Edge>();
 
 		visited[0] = true;
 		for (Edge e : list[0]) { 

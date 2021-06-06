@@ -1,137 +1,119 @@
 package project;
-// CCC 2009
-//
-// S4: Ship and Shop   Dijkstra's Algorithm approach
-// 
-// this is algorithm was given to me by both
-//    Amlesh Jayakumar of Waterloo Collegiate Institute
-//    Wen-Hao Lue of Bayview Glen Private School
-//
-// I found an excellent explaination of Dijkstra's Algorithm on
-// http://www.personal.kent.edu/~rmuhamma/Algorithms/MyAlgorithms/GraphAlgor/dijkstraAlgor.htm
-//
-
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
-public class CCCShopandShip2
-{
-    public static final char INFINITY = 65535;
+public class CCCShopandShip2 { //This is the adjacency matrix method, ACs for all test cases
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static StringTokenizer st;
+	static int[][] list;
+	static int[] cost;
+	static int[] store;
+	static int N, T, K;
 
-    public static int n;             // number of cities
-    public static char[] shipping;   // shipping contains shippping cost
-				     // to that city from the destination city
-				     // char arrays are used to save space
-				     // 5000x5000 ints is a too much for
-				     // my computer :-)
-    public static char[] [] edges;
-    public static char[] cost;       // contains the cost of the pencils
-
-    public static void main (String[] args) {
-    Scanner sc = new Scanner(System.in);
-	n = sc.nextInt();
-
-	edges = new char [n + 1] [n + 1];
-	shipping = new char [n + 1];
-	char[] cost = new char [n + 1];
-
-	for (int i = 1 ; i <= n ; i++)
-	{
-	    cost [i] = INFINITY;
-	    for (int j = 1 ; j <= n ; j++)
-		edges [i] [j] = 0;
-	}
-
-	// Store trade routes (edges)
-	int t = sc.nextInt ();
-	for (int i = 1 ; i <= t ; i++)
-	{
-	    int x = sc.nextInt ();
-	    int y = sc.nextInt ();
-	    char c = (char) sc.nextInt ();
-	    if (x >= 1 && x <= n && y >= 1 && y <= n)  //strangely some data files have invalid cities??
-	    {
-		edges [x] [y] = c;
-		edges [y] [x] = c;
-	    }
-	}
-
-	// Store cities that sell pencils
-	int k = sc.nextInt ();
-	char hold1, hold2;
-	for (int i = 0 ; i < k ; i++)
-	{
-	    hold1 = (char) sc.nextInt ();
-	    hold2 = (char) sc.nextInt ();
-	    if (hold1 >= 1 && hold1 <= n)
-		cost [hold1] = hold2;
-	}
-
-	int destination = sc.nextInt ();
-
-	Dijkstra (destination);
- 
-	// Dijkstra has given the minimum shipping costs from every city
-	// to the destination. So the cheapest pencil we can get at that
-	// city is from the city with the lowest shipping cost + pencil cost.
-	int min = INFINITY;
-	int totalCost = 0;
-
-	for (int i = 1 ; i <= n ; i++)
-	{
-	    totalCost = cost [i] + shipping [i];
-	    System.out.println((int)shipping[i]);
-	    if (totalCost < min)
-		min = totalCost;
-	}
-	System.out.println (min);
-    }
-
-
-    // Use Dijkstra's algorithm to find the cheapest path from the destination
-    // to all other points in O(n^2) time.
-    // In other words it fills the shipping array with the minimum shipping
-    // cost from that city to the destination city.
-    public static void Dijkstra (int start)
-    {
-	boolean[] used = new boolean [n + 1];
-	int city, small, count;
-
-	//step 1: fill all shipping values with a large value except the destination
-	shipping = new char [n + 1];
-	for (int i = 1 ; i <= n ; i++)
-	{
-	    used [i] = false;
-	    shipping [i] = INFINITY;
-	}
-	shipping [start] = 0;
-	count = 0;
-	while (count < n)
-	{
-	    // Step 2: Choose the next city:
-	    // the one with the smallest shipping that hasn't been used.
-	    small = INFINITY;
-	    city = 1;
-	    for (int i = 1 ; i <= n ; i++)
-	    {
-		if (!used [i] && shipping [i] < small)
-		{
-		    small = shipping [i];
-		    city = i;
+	static class Edge implements Comparable<Edge> {
+		public int to;
+		public int weight;
+		public Edge(int to, int weight) {
+			this.to = to;
+			this.weight = weight;
 		}
-	    }
-	    
-	    // Step 3: for all cities (i) connected to the city in question,
-	    //         update their distance to city. It is the the distance
-	    //         to the city plus the distance along the edge from
-	    //         the ith city to the city, if that is smaller than
-	    //         what is already stored in shipping for that city.
-	    used [city] = true;
-	    count++;
-	    for (int i = 1 ; i <= n ; i++)
-		if (edges [city] [i] > 0 && !used [i])
-		    if (shipping [i] > shipping [city] + edges [city] [i])
-			shipping [i] = (char) (shipping [city] + edges [city] [i]);
+		@Override
+		public int compareTo(Edge o) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
 	}
-    }
+
+	public static int getmin(boolean[] visited, int[] dist) {
+		int min = Integer.MAX_VALUE;
+		int city = 1;
+		for (int i=1; i<=N; i++) {
+			if (!visited[i] && min>dist[i]) {
+				min = dist[i];
+				city = i;
+			}
+		}
+		return city;
+	}
+
+
+	public static void Dijkstra(int start) {
+		boolean[] visited = new boolean[N+1];
+		int[] dist = new int[N+1];
+		Arrays.fill(dist, Integer.MAX_VALUE);
+		dist[start] = 0;
+
+		for (int i=1; i<=N; i++) {
+
+			int city = getmin(visited, dist);
+
+			visited[city] = true;
+			for (int j=1; j<=N; j++) {
+				if (list[city][j] > 0 && !visited[j]) {
+					int newdist = list[city][j] + dist[city];
+					if (dist[j] > newdist) {
+						dist[j] = newdist;
+					}
+				}
+			}
+		}
+
+
+		int min = Integer.MAX_VALUE;
+		for (int i=1; i<=N; i++) {
+			min = Math.min(min, cost[i] + dist[i]);
+		}
+		System.out.println(min);
+	}
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);	
+		N = readInt();
+		T = readInt();
+		list = new int[N+1][N+1];
+
+		for (int i=1; i<=T; i++) {
+			int x = readInt(), y = readInt(), weight = readInt();
+			if (x >= 1 && x <= N && y >= 1 && y <= N) {
+				list[x][y] = weight;
+				list[y][x] = weight;
+			}
+		}
+		K = readInt();
+		cost = new int[N+1];
+		Arrays.fill(cost, Integer.MAX_VALUE/100);
+		for (int i=1; i<=K; i++) {
+			cost[readInt()] = readInt();
+
+		}
+		int destination = readInt();
+		Dijkstra(destination);
+	}
+
+	static String next() throws IOException {
+		while (st == null || !st.hasMoreTokens())
+			st = new StringTokenizer(br.readLine().trim());
+		return st.nextToken();
+	}
+
+	static long readLong() throws IOException {
+		return Long.parseLong(next());
+	}
+
+	static int readInt() throws IOException {
+		return Integer.parseInt(next());
+	}
+
+	static double readDouble() throws IOException {
+		return Double.parseDouble(next());
+	}
+
+	static char readCharacter() throws IOException {
+		return next().charAt(0);
+	}
+
+	static String readLine() throws IOException {
+		return br.readLine().trim();
+	}
 }
