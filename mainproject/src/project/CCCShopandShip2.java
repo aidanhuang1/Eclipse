@@ -36,7 +36,6 @@ public class CCCShopandShip2 { //This is the adjacency matrix method, ACs for al
 		return city;
 	}
 
-
 	public static void Dijkstra(int start) {
 		boolean[] visited = new boolean[N+1];
 		int[] dist = new int[N+1];
