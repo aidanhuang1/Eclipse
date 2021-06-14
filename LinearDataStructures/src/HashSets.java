@@ -13,7 +13,7 @@ public class HashSets {
 		lightBulbs.add("incandescent");
 		lightBulbs.add("compact fluorescent");
 		lightBulbs.add("LED");
-
+		
 		System.out.println(lightBulbs.contains("LED"));  // true
 		System.out.println(lightBulbs.contains("halogen"));  // false
 		
