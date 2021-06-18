@@ -4,10 +4,37 @@ import java.io.*;
 public class CCCDegreesofseparation {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
-	static ArrayList<Integer>[] list = ArrayList<Integer>(Arrays.as{{}, {6}, {6}, {4,5,6,15}, {3,5,6}, {3,4,6}, {1,2,3,4,5,7}, {6,8}, {7,9}, {8,10,12}, {9,11}, {10,12}, {9,11,13}, {12,14,15}, {13}, {3,13}, {17,18}, {16,18}, {16,17}}); 
+	static ArrayList<Integer>[] list; 
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
+		for (int i=0; i<list.length; i++) {
+			list[i] = new ArrayList<Integer>();
+		}
+		list[1].add(6);
+		list[2].add(6);
+		list[3].add(4, 5, 6, 15);
+		list[4].add();
+		list[5].add();
+		list[6].add();
+		list[7].add();
+		list[8].add();
+		list[9].add();
+		list[10].add();
+		list[11].add();
+		list[12].add();
+		list[13].add();
+		list[14].add();
+		list[15].add();
+		list[16].add();
+		list[17].add();
+		list[18].add();
+		list[19].add();
+		list[20].add();
+		list[21].add();
+		list[22].add();
+		list[2].add();
+		
 
 		while (true) {
 			char input = readCharacter();

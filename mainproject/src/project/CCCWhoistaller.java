@@ -1,28 +1,11 @@
+package project;
 import java.util.*;
 import java.io.*;
-public class Main {
+public class CCCWhoistaller {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static boolean[] visited;
 	
-	public static boolean bfs(int p, int q, ArrayList<Integer>[] list) {
-		Queue<Integer> queue = new LinkedList<>();
-		queue.add(q);
-		visited[q] = true;
-		while (!queue.isEmpty()) {
-			int temp = queue.poll();
-			if (temp==p) {
-				return true;
-			}
-			for (int i: list[temp]) {
-				if (!visited[i] || i==p) {
-					queue.add(i);
-					visited[i] = true;
-				}
-			}
-		}
-		return false;
-	}
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -37,10 +20,44 @@ public class Main {
 			list[b].add(a);
 		}
 		int p = readInt(), q = readInt();
+		int found = 0;
 		
-		if (bfs(p, q, list)) {
+		
+		Queue<Integer> queue = new LinkedList<>();
+		queue.add(q);
+		visited[q] = true;
+		while (!queue.isEmpty()) {
+			int temp = queue.poll();
+			if (temp==p) {
+				found = 1;
+			}
+			for (int i: list[temp]) {
+				if (!visited[i] || i==p) {
+					queue.add(i);
+					visited[i] = true;
+				}
+			}
+		}
+		queue.clear();
+		queue.add(p);
+		visited[p] = true;
+		if (found==0) {
+			while (!queue.isEmpty()) {
+				int temp = queue.poll();
+				if (temp==q) {
+					found = 2;
+				}
+				for (int i: list[temp]) {
+					if (!visited[i] || i==q) {
+						queue.add(i);
+						visited[i] = true;
+					}
+				}
+			}
+		}
+		if (found==1) {
 			System.out.println("yes");
-		} else if (bfs(q, p, list)) {
+		} else if (found==2) {
 			System.out.println("no");
 		} else {
 			System.out.println("unknown");
