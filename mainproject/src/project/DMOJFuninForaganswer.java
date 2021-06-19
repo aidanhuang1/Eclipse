@@ -19,41 +19,46 @@ public class DMOJFuninForaganswer{
 			adj.get(a).add(new Edge(b, w, i)); 
 			adj.get(b).add(new Edge(a , w, i));
 		}
-		int a = readInt() - 1, b = readInt() - 1; 
+		int a = readInt() - 1, b = readInt() - 1; //a is starting node, b is ending node, c is time limit
 		long c = readLong();
-		
 		dijkstras(a, m); 
-		if(dist[b] > c) {
+		System.out.println(Arrays.toString(dist));
+		if (dist[b] > c) { //if we dont have enough time to get to the ending node 
+			
 			pw.println(-1); 
 			pw.close(); 
 			return;
 			}
 		long left = 0, right = m;
 		while(left < right) {
+//			System.out.println(Arrays.toString(dist));
 			long mid = left + (right - left) / 2;
 			dijkstras(a, mid);
-			if(dist[b] < c) {
+			System.out.println(Arrays.toString(dist));
+//			System.out.println(dist[b]);
+			if(dist[b] < c) { //b is the ending node, c is the time limit (if it is still under time limit)
+				
 				right = mid;
 			}
 			else {
 				left = mid + 1;
 			}
 		}
-		pw.println(left); 
+//		pw.println(left); 
 		pw.close();
 	}
 	static void dijkstras(int src, long m){
 		Arrays.fill(dist, Long.MAX_VALUE);
 		PriorityQueue<Edge> pq = new PriorityQueue<Edge>();
 		pq.add(new Edge(src, 0, 0)); 
-		dist[src] = 0;
+		dist[src] = 0; 
 		while(!pq.isEmpty()){
 			Edge u = pq.poll();
 			if(u.weight > dist[u.dest]) {
 				continue;
 			}
 			for(Edge e : adj.get(u.dest)) {
-				if(e.pass < m && dist[e.dest] > dist[u.dest] + e.weight) {
+				if(e.pass < m && dist[e.dest] > dist[u.dest] + e.weight) { // if next node's level is less than
 					dist[e.dest] = dist[u.dest] + e.weight;
 					pq.add(new Edge(e.dest, dist[e.dest], e.pass));
 				}

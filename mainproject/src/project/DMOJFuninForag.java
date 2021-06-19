@@ -1,51 +1,40 @@
 package project;
 import java.util.*;
+
 import java.io.*;
 public class DMOJFuninForag {
-	
+
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static ArrayList<Edge>[] list;
+	static int[] dist, distlevel;
 	static int N, M;
 
-	public static void search(int start, int end, int minutes) {
-		int[][] dist = new int[N+1][100001];
-		boolean[] visited = new boolean[N+1];
-		for (int[] i: dist) {
-			Arrays.fill(i, Integer.MAX_VALUE);
-		}
-		dist[start][0] = 0;
-		PriorityQueue<Edge> pq = new PriorityQueue<>();
+	public static void search(int start, int M) {
+		Arrays.fill(dist, Integer.MAX_VALUE);
+		PriorityQueue<Edge> pq = new PriorityQueue<Edge>();
 		pq.add(new Edge(start, 0, 0)); 
-		visited[start] = true;
-		while (!pq.isEmpty()) {
-			Edge temp = pq.poll();
-			for (Edge i: list[temp.to]) {
+		dist[start] = 0; 
+		int templevel = 0;
+		distlevel[start] = templevel;
 
-				int alt = i.time+temp.time;
-				if (alt<minutes) {
-					if (i.level > temp.level) {
-						dist[i.to][i.level] = alt;
-						pq.add(new Edge(i.to, alt, i.level));
-					} else {
-						dist[i.to][temp.level] = alt;
-						pq.add(new Edge(i.to, alt, temp.level));
+		while(!pq.isEmpty()){
+			Edge u = pq.poll();
+			if (u.time > dist[u.to]) {
+				continue;
+			}
+			for (Edge e : list[u.to]) {
+				int temptime = dist[u.to] + e.time;
+				if (e.level < M && dist[e.to] > temptime) { 
+					dist[e.to] = temptime;
+					if (e.level>templevel) {
+						templevel = e.level;
 					}
-				}
-
-			}
-		}
-
-
-		int min = 0;
-		for (int i=end; i<=end; i++) {
-			for (int j=0; j<dist[i].length; j++) {
-				if (dist[i][j]!=Integer.MAX_VALUE && min<j) {
-					min = j;
+					distlevel[e.to] = templevel+1;
+					pq.add(new Edge(e.to, dist[e.to], e.level));
 				}
 			}
 		}
-		System.out.println(min);
 	}
 
 
@@ -54,18 +43,42 @@ public class DMOJFuninForag {
 
 		N = readInt();
 		M = readInt();
-		list = new ArrayList[N+1];
+		list = new ArrayList[N];
+		dist = new int[N];
+		distlevel = new int[N];
 		for (int i=0; i<list.length; i++) {
 			list[i] = new ArrayList<Edge>();
 		}
 		for (int i=0; i<M; i++) {
-			int a = readInt(), b = readInt(), c = readInt();
-			list[a].add(new Edge(b, c, i+1));
-			list[b].add(new Edge(a, c, i+1));
+			int a = readInt()-1, b = readInt()-1, c = readInt();
+			list[a].add(new Edge(b, c, i));
+			list[b].add(new Edge(a, c, i));
 		}
-		search(readInt(), readInt(), readInt());
+		int a = readInt()-1, b = readInt()-1, c = readInt();
 
+		search(a, M);
+		if (dist[b] > c) { //if we dont have enough time to get to the ending node 
+
+			System.out.println(-1);
+			return;
+		}
+		int left = 0, right = M;
+		while(left < right) {
+			//			System.out.println(Arrays.toString(dist));
+			int mid = left + (right - left) / 2;
+			search(a, mid);
+			if(dist[b] < c) { //b is the ending node, c is the time limit (if it is still under time limit)
+
+				right = mid;
+			}
+			else {
+				left = mid + 1;
+			}
+		}
+		System.out.println(Arrays.toString(dist));
 	}
+
+
 	static class Edge implements Comparable<Edge>{
 		int to;
 		int time;

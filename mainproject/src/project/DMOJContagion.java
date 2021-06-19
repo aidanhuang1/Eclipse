@@ -17,9 +17,9 @@ public class DMOJContagion {
 	static country[] countries;
 	static int[] distance;
 	static boolean[] visited;
-	
+
 	public static int calcdist(country from, country to) {
-	    return ((from.x-to.x)*(from.x-to.x)) + ((from.y-to.y)*(from.y-to.y));
+		return ((from.x-to.x)*(from.x-to.x)) + ((from.y-to.y)*(from.y-to.y));
 	}
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -33,31 +33,39 @@ public class DMOJContagion {
 		}
 		int X = readInt()-1, Q = readInt();
 		distance[X] = 0;
-		for (int i=0; i<N; i++) {
-			int d = Integer.MAX_VALUE, u = Integer.MAX_VALUE;
-			for (int j=0; j<N; j++) {
-				if (!visited[j] && distance[j] < d) {
-					d = distance[j];
-					u = j;
+
+		for (int i= 0; i < N-1; i++) {
+			int u = -1;
+			for (int j = 0; j < N; j++) {
+				if (visited[j]==false && (u==-1 || (distance[i] < distance[u]))) {
+					u = j;	
 				}
 			}
 			visited[u] = true;
-			for (int j=0; j<N; j++) {
+			for (int j = 0; j < N; j++) {
 				int tempdist = calcdist(countries[u], countries[j]);
-				if (distance[j] > (distance[u] + tempdist)) {
+				if (distance[u] + tempdist < distance[j]) {
 					distance[j] = distance[u] + tempdist;
 				}
 			}
+
 		}
+
+		Arrays.sort(distance);
+
 		for (int i=0; i<Q; i++) {
 			int hours = readInt();
-			int count = 0;
-			for (int j: distance) {
-				if (j<=hours) {
-					count++;
+			boolean found = false;
+			for (int j=0; j<distance.length; j++) {
+				if (distance[j]>hours) {
+					System.out.println(j);
+					found = true;
+					break;
 				}
 			}
-			System.out.println(count);
+			if (!found) {
+				System.out.println(distance.length);
+			}
 		}
 	}
 
