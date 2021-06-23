@@ -1,23 +1,34 @@
 import java.util.*;
 import java.io.*;
-public class Main {
+public class findcombinations {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
+	
+	/*
+	 * This is the code for CSES Dice Combinations. It revolves around combinations using for loops
+	 * and memoization. You can use this as a template for other problems.
+	 * 
+	 * In this code, you are looking at the highest possible combinations possible.
+	 * You can consider this memoization because you are storing previous answers
+	 * and adding to them
+	 */
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		int sum = readInt();
-		int c[] = new int[sum+1];
-		c[0] = 1;
-		for (int i=1; i<=sum; i++) {
-			for (int j=1; j<=6; j++) {
-				if (i-j>=0) {
-					c[i] += c[i-j];
+		long[] combinations = new long[sum+1];
+		combinations[0] = 1; //set start to 1
+		for (int i=1; i<=sum; i++) { //i is dice face
+			for (int j=1; j<=6; j++) { //you are comparing to see if it possible to add another combination 
+				System.out.println(Arrays.toString(combinations));
+				if (i-j >= 0) {
+					combinations[i] += combinations[i-j];
 				}
 			}
-			c[i] %= 1000000007;
+			combinations[i] %= 1000000007;
 		}
-		System.out.println(c[sum]);
+		System.out.println(combinations[sum]);
+
 	}
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())

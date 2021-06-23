@@ -1,24 +1,28 @@
+package project;
 import java.util.*;
 import java.io.*;
-public class Main {
+public class DMOJKnapsack1 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 
+
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int sum = readInt();
-		int c[] = new int[sum+1];
-		c[0] = 1;
-		for (int i=1; i<=sum; i++) {
-			for (int j=1; j<=6; j++) {
-				if (i-j>=0) {
-					c[i] += c[i-j];
-				}
+		int N = readInt(), W = readInt();
+		long[] knapsack = new long[100000001];
+		for (int i=1; i<=N; i++) {
+			int w = readInt(), v = readInt();
+			for (int j=W; j>=w; j--) {
+				knapsack[j] = Math.max(knapsack[(j-w)] + v, knapsack[j]);
+				System.out.println(Arrays.toString(knapsack));
 			}
-			c[i] %= 1000000007;
 		}
-		System.out.println(c[sum]);
+		
+		Arrays.sort(knapsack);
+		System.out.println(knapsack[100000]);
+
 	}
+	
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
