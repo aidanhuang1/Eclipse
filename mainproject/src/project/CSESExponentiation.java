@@ -1,44 +1,24 @@
 package project;
 import java.util.*;
 import java.io.*;
-public class CSESMinimizingCoins {
+public class CSESExponentiation {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
-	static int[] coins;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int n = readInt(), x = readInt(); //n is number of coins, x is the sum that we want
-		coins = new int[n]; //array that holds all the coins we can use
+		int n = readInt();
 		for (int i=0; i<n; i++) {
-			coins[i] = readInt();
-		}
-
-		int[] dp = new int[x+1];
-		Arrays.fill(dp, Integer.MAX_VALUE/10); //Max_Value because we are looking for the smallest (minimum) number of coins needed
-		dp[0] = 0; //to get a sum of 0 we don't need any coins
-
-		for (int i=1; i<=x; i++) {
-			for (int j: coins) {
-				if (i-j >= 0) { //to make sure that i-j is not out of bounds
-					dp[i] = Math.min(dp[i], dp[i-j]+1);
-					
-				}
-				
+			long a = readLong(), b = readLong();
+			long base = a;
+			for (int j=1; j<b; j++) {
+				a = (a*base)%1000000007;
 			}
-			System.out.println(Arrays.toString(dp));
+			System.out.println(a%1000000007);
 		}
-		if (dp[x] == Integer.MAX_VALUE/10) { //dp at index x will be the minimum number of coins
-			System.out.println(-1);
-			System.exit(0);
-		}
-
-		System.out.println(dp[x]);
-
-
 
 	}
-
+	
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
@@ -64,5 +44,4 @@ public class CSESMinimizingCoins {
 	static String readLine() throws IOException {
 		return br.readLine().trim();
 	}
-
 }

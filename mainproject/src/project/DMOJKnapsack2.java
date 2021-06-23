@@ -1,40 +1,25 @@
+package project;
 import java.util.*;
 import java.io.*;
-public class Main {
+public class DMOJKnapsack2 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
-	static int[] coins;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int n = readInt(), x = readInt(); //n is number of coins, x is the sum that we want
-		coins = new int[n]; //array that holds all the coins we can use
-		for (int i=0; i<n; i++) {
-			coins[i] = readInt();
-		}
-
-		int[] dp = new int[x+1];
-		Arrays.fill(dp, Integer.MAX_VALUE/10); //Max_Value because we are looking for the smallest (minimum) number of coins needed
-		dp[0] = 0; //to get a sum of 0 we don't need any coins
-
-		for (int i=1; i<=x; i++) {
-			for (int j: coins) {
-				if (i-j >= 0) {
-					dp[i] = Math.min(dp[i], dp[i-j]+1);
-				}
+		
+		int N = readInt(), W = readInt();
+		long[] knapsack = new long[10001];
+		for (int i=1; i<=N; i++) {
+			int w = readInt(), v = readInt();
+			for (int j=W; j>=w; j--) {
+				knapsack[j] = Math.max(knapsack[j-w] + v, knapsack[j]);
 			}
 		}
-		if (dp[x] == Integer.MAX_VALUE/10) { //dp at index x will be the minimum number of coins
-			System.out.println(-1);
-			System.exit(0);
-		}
-
-		System.out.println(dp[x]);
-
-
-
+		Arrays.sort(knapsack);
+		System.out.println(knapsack[10000]);
 	}
-
+	
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
@@ -60,5 +45,4 @@ public class Main {
 	static String readLine() throws IOException {
 		return br.readLine().trim();
 	}
-
 }

@@ -9,12 +9,11 @@ public class DMOJKnapsack1 {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		int N = readInt(), W = readInt();
-		long[] knapsack = new long[100000001];
+		long[] knapsack = new long[100001];
 		for (int i=1; i<=N; i++) {
 			int w = readInt(), v = readInt();
 			for (int j=W; j>=w; j--) {
 				knapsack[j] = Math.max(knapsack[(j-w)] + v, knapsack[j]);
-				System.out.println(Arrays.toString(knapsack));
 			}
 		}
 		
