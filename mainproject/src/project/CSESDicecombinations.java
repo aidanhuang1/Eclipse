@@ -10,8 +10,9 @@ public class CSESDicecombinations {
 	 * You can consider this memoization because you are storing previous answers
 	 * and adding to them
 	 * 
-	 * Recognize that dp[N] = dp[N−1] + dp[N−2] + dp[N−3] + dp[N−4] + dp[N−5] + dp[N−6].
+	 * Recognize that dp[N] = dp[N-1] + dp[N-2] + dp[N-3] + dp[N-4] + dp[N-5] + dp[N-6].
 	 * where dp is the array (combinations array in this example)
+	 * We are essentially taking the sum of the previous 6 values
 	 */
 
 	public static void main(String[] args) throws IOException {

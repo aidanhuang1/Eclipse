@@ -1,29 +1,28 @@
+package project;
 import java.util.*;
 import java.io.*;
-public class Main {
+public class DMOJFrog1 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
-	static int[] coins;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int n = readInt(), x = readInt();
-		int[] coins = new int[n];
-		for (int i=0; i<n; i++) {
-			coins[i] = readInt();
+		int N = readInt();
+		int[] stones = new int[N];
+		for (int i=0; i<N; i++) {
+			stones[i] = readInt();
 		}
-		long[] dp = new long[x+1];
+		long[] dp = new long[N];
 		Arrays.fill(dp, Integer.MAX_VALUE/10);
-		dp[0] = 0;
-		for (int i=1; i<=x; i++) {
-			for (int j: coins) {
-				if (i-j >= 0) {
-					dp[i] = Math.min(dp[i], dp[i-j]+1);
-				}
-			}
+		dp[0] = 0; //dist to 1st stone is 0
+		for (int i=0; i<N-2; i++) {
+//			if (N-i>=2) {
+				dp[i] = Math.abs(Math.min(stones[i+1]-stones[i], stones[i+2]-stones[i]));
+//			}
 		}
-		if (dp[x]==Integer.MAX_VALUE/10) System.out.println(-1);
-		else System.out.println(dp[x]);
+		System.out.println(Arrays.toString(dp));
+
+
 	}
 
 	static String next() throws IOException {
