@@ -1,30 +1,21 @@
+package project;
 import java.util.*;
 import java.io.*;
-public class Main {
+public class CSESCoinCombinations {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int N = readInt();
-		int[] stones = new int[N];
-		for (int i=0; i<N; i++) {
-			stones[i] = readInt();
+		int n = readInt(), x = readInt();
+		int[] coins = new int[n];
+		for (int i=0; i<n; i++) {
+			coins[i] = readInt();
 		}
-		long[] dp = new long[N];
-		Arrays.fill(dp, Integer.MAX_VALUE);
-		dp[0] = 0;
-		
-		for (int i=0; i<N; i++) { //the stone that we are on currently
-			for (int j=i+1; j<=i+2; j++) { //the stone that we are looking at
-				if (j<N) {
-					dp[j] = Math.min(dp[j], dp[i]+Math.abs(stones[j]-stones[i]));
-				}
-			}
-		}
-		System.out.println(dp[N-1]);
+		long[] combinations = new long[n+1];
+		combinations =	
 	}
-
+	
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
@@ -50,5 +41,4 @@ public class Main {
 	static String readLine() throws IOException {
 		return br.readLine().trim();
 	}
-
 }

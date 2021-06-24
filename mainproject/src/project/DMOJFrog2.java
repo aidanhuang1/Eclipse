@@ -1,28 +1,29 @@
+package project;
 import java.util.*;
 import java.io.*;
-public class Main {
+public class DMOJFrog2 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int N = readInt();
+		int N = readInt(), K = readInt();
 		int[] stones = new int[N];
 		for (int i=0; i<N; i++) {
 			stones[i] = readInt();
 		}
 		long[] dp = new long[N];
-		Arrays.fill(dp, Integer.MAX_VALUE);
-		dp[0] = 0;
+		Arrays.fill(dp, Integer.MAX_VALUE/10);
 		
-		for (int i=0; i<N; i++) { //the stone that we are on currently
-			for (int j=i+1; j<=i+2; j++) { //the stone that we are looking at
-				if (j<N) {
-					dp[j] = Math.min(dp[j], dp[i]+Math.abs(stones[j]-stones[i]));
+		dp[0] = 0;
+		for (int i=0; i<N; i++) {
+			for (int j=i+1; j<=i+K; j++) {  //The only difference from Frog 1 is that we have a new input K and we are extending to see if we can jump to at most i+K stones
+				if (j<N) { 					
+					dp[j] = Math.min(dp[j], dp[i]+Math.abs(stones[i]-stones[j]));
 				}
 			}
 		}
-		System.out.println(dp[N-1]);
+		System.out.println(dp[N-1]); 
 	}
 
 	static String next() throws IOException {

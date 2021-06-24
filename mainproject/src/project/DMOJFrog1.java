@@ -14,15 +14,18 @@ public class DMOJFrog1 {
 		}
 		long[] dp = new long[N];
 		Arrays.fill(dp, Integer.MAX_VALUE/10);
-		dp[0] = 0; //dist to 1st stone is 0
-		for (int i=0; i<N-2; i++) {
-//			if (N-i>=2) {
-				dp[i] = Math.abs(Math.min(stones[i+1]-stones[i], stones[i+2]-stones[i]));
-//			}
+		
+		dp[0] = 0;
+		for (int i=0; i<N; i++) { //the stone that we are on currently
+			for (int j=i+1; j<=i+2; j++) { //this loop is because we can jump to the next stone, or the stone after it (so i+1 or i+2 but we can't go any farther than at most 2 jumps)
+				if (j<N) { //to make sure that the stone we want to jump to is not out of bounds
+					dp[j] = Math.min(dp[j], dp[i]+Math.abs(stones[i]-stones[j]));
+					//the stone that we are jumping to will be the distance cost to get to the stone we are currently on
+					//plus the cost of the stone that we will be jumping to.
+				}
+			}
 		}
-		System.out.println(Arrays.toString(dp));
-
-
+		System.out.println(dp[N-1]); //dp[N-1] will contain the minimum total cost to get to the last stone.
 	}
 
 	static String next() throws IOException {
