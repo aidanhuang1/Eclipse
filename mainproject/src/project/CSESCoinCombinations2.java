@@ -1,7 +1,7 @@
 package project;
 import java.util.*;
 import java.io.*;
-public class CSESCoinCombinations {
+public class CSESCoinCombinations2 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 
@@ -15,18 +15,18 @@ public class CSESCoinCombinations {
 		long[] dp = new long[x+1];
 		dp[0] = 1;
 		
-		for (int i=1; i<=x; i++) {
-			for (int j: coins) {
-				if (i-j>=0) { //if i-j>=0 is true then that means we have room for the coin j
-					dp[i]+=dp[i-j]; // then we add the sum of the previous answers
-					
-					dp[i] %= 1000000007;
-				}
+		for (int i: coins) {
+			for (int j=0; j<=x; j++) {
+				if (j-i>=0) {
+					dp[j] += dp[j-i];
+					dp[j] %= 1000000007;
+				}	
 			}
 		}
 		System.out.println(dp[x]);
+		
 	}
-
+	
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());

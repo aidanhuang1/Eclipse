@@ -6,25 +6,26 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int N = readInt();
-		int[] stones = new int[N];
-		for (int i=0; i<N; i++) {
-			stones[i] = readInt();
+		int n = readInt(), x = readInt();
+		int[] coins = new int[n];
+		for (int i=0; i<n; i++) {
+			coins[i] = readInt();
 		}
-		long[] dp = new long[N];
-		Arrays.fill(dp, Integer.MAX_VALUE);
-		dp[0] = 0;
+		long[] dp = new long[x+1];
+		dp[0] = 1;
 		
-		for (int i=0; i<N; i++) { //the stone that we are on currently
-			for (int j=i+1; j<=i+2; j++) { //the stone that we are looking at
-				if (j<N) {
-					dp[j] = Math.min(dp[j], dp[i]+Math.abs(stones[j]-stones[i]));
-				}
+		for (int i: coins) {
+			for (int j=0; j<=x; j++) {
+				if (j-i>=0) {
+					dp[j] += dp[j-i];
+					dp[j] %= 1000000007;
+				}	
 			}
 		}
-		System.out.println(dp[N-1]);
+		System.out.println(dp[x]);
+		
 	}
-
+	
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
@@ -50,5 +51,4 @@ public class Main {
 	static String readLine() throws IOException {
 		return br.readLine().trim();
 	}
-
 }
