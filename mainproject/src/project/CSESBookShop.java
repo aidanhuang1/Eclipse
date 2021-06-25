@@ -1,24 +1,20 @@
 package project;
 import java.util.*;
 import java.io.*;
-public class DMOJKnapsack1 {
+public class CSESBookShop {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
-
+	
+	//This is an 0/1 knapsack problem
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int N = readInt(), W = readInt();
-		long[] knapsack = new long[100001];
-		for (int i=1; i<=N; i++) {
-			int w = readInt(), v = readInt();
-			for (int j=W; j>=w; j--) { //we look backwards
-				knapsack[j] = Math.max(knapsack[(j-w)] + v, knapsack[j]);
-			}
+		int n = readInt(), max = readInt();
+		long[] dp = new long[100001];
+		for (int i=0; i<n; i++) {
+			int cost = readInt(), pages = readInt();
+			for (int )
 		}
-		
-		Arrays.sort(knapsack);
-		System.out.println(knapsack[100000]);
 
 	}
 	
@@ -47,4 +43,5 @@ public class DMOJKnapsack1 {
 	static String readLine() throws IOException {
 		return br.readLine().trim();
 	}
+
 }

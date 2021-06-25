@@ -16,7 +16,7 @@ public class CSESCoinCombinations2 {
 		dp[0] = 1;
 		
 		for (int i: coins) {
-			for (int j=0; j<=x; j++) {
+			for (int j=0; j<=x; j++) {  //we changed the order of the loops
 				if (j-i>=0) {
 					dp[j] += dp[j-i];
 					dp[j] %= 1000000007;
