@@ -1,29 +1,31 @@
 package project;
 import java.util.*;
 import java.io.*;
-public class DMOJKnapsack1 {
+public class TwoSets2 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 
-
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int N = readInt(), W = readInt(); //N is number of items, W is the capacity
-		long[] knapsack = new long[10]; //knapsack[i] is the maximum sum for the i capacity
-		for (int i=1; i<=N; i++) {
-			int w = readInt(), v = readInt(); //weight/cost, value
-			
-			for (int j=W; j>=w; j--) { //we look backwards starting from max capacity, we stop at w because our item's weight will not go less than w in that row 
-				
-				knapsack[j] = Math.max(knapsack[(j-w)] + v, knapsack[j]); //knapsack[(j-w)] because your trying to add the previous with the current item's value and seeing if it is bigger
-				System.out.println(Arrays.toString(knapsack));
-			}
-			
+		int n = readInt();
+		int sum = (n*(n+1))/2; //you could also find the sum using for loop
+		if (sum%2!=0) {
+			System.out.println(0); //if sum is odd, there are no solutions because sum/2 would have a decimal
+			return;
 		}
+		sum/=2; //this is the sum that both groups need to add up to
+		long[] dp = new long[sum+1];
+		dp[0] = 1;
+		for (int i=1; i<=n; i++) {
+			for (int j=sum; j>=i; j--) {	
+				dp[j]+=dp[j-i];
+				dp[j]%=1000000007;
+			}
+		}
+		System.out.println(Arrays.toString(dp));
+		System.out.println(dp[sum]/2);
 		
-		Arrays.sort(knapsack);
-		System.out.println(knapsack[9]);
-
+		
 	}
 	
 	static String next() throws IOException {

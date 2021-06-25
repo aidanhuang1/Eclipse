@@ -1,40 +1,43 @@
 package project;
 import java.util.*;
 import java.io.*;
-public class CSESBookShop {
+public class CSESMoneySums {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
-	
-	//This is an 0/1 knapsack problem
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int n = readInt(), max = readInt();
-		long[] dp = new long[max+1];
-		int[] prices = new int[n];
-		int[] pages = new int[n];
-		//We store input because prices and pages input are on different lines
+		int n = readInt(), max = 0;
+		int[] coins = new int[n];
 		for (int i=0; i<n; i++) {
-			prices[i] = readInt();
+			int coin = readInt();
+			coins[i] = coin;
+			max += coin; //max is the sum of all the coins that we are given, 
+			//we need this to create the size of our capacity array
 		}
+		boolean[] possible = new boolean[max+1]; //if possible[i] is true, then we can make a sum of i
+		possible[0] = true;	
+		int count = 0;
 		for (int i=0; i<n; i++) {
-			pages[i] = readInt();
-		}
-		
-		
-		//This is simply 0/1 knapsack, good idea to draw out the implement/arrays on paper first to visualize
-		for (int i=0; i<n; i++) {
-			int price = prices[i];
-			int page = pages[i];
-			for (int j=max; j>=price; j--) {
-				dp[j] = Math.max(dp[j], dp[j-price]+page);
+			for (int j=max; j>=0; j--) {
+				if (possible[j]) { //if the sum we are at currently is true, then the sum that we add another coin with would also be true, as long as it is not out of bounds
+					possible[j+coins[i]] = true;
+				}
 			}
 		}
-		System.out.println(dp[max]);
 		
+		
+		for (int i=1; i<possible.length; i++) {
+			if (possible[i])
+				count++;
+		}
+		System.out.println(count);
+		for (int i=1; i<possible.length; i++) {
+			if (possible[i]) System.out.print(i+" ");
+		}
 
 	}
-	
+
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
@@ -60,5 +63,4 @@ public class CSESBookShop {
 	static String readLine() throws IOException {
 		return br.readLine().trim();
 	}
-
 }

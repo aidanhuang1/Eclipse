@@ -6,26 +6,25 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int n = readInt(), x = readInt();
-		int[] coins = new int[n];
-		for (int i=0; i<n; i++) {
-			coins[i] = readInt();
+		int N = readInt();
+		int sum = N*(N+1)/2;
+		if (sum%2==1) {
+			System.out.println(0);
+			return;
 		}
-		long[] dp = new long[x+1];
+		int max = sum/2;
+		long[] dp = new long[max+1];
 		dp[0] = 1;
-		
-		for (int i: coins) {
-			for (int j=0; j<=x; j++) {
-				if (j-i>=0) {
-					dp[j] += dp[j-i];
-					dp[j] %= 1000000007;
-				}	
+		for (int i = 1; i<=N; i++) {
+			for (int j = max-i; j>=0; j--) {
+				dp[i+j]=(dp[i+j]+dp[j])%1000000007;
 			}
 		}
-		System.out.println(dp[x]);
-		
+		System.out.println((dp[max]/2));
 	}
-	
+
+
+
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
