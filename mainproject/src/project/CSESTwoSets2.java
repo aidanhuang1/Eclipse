@@ -1,33 +1,34 @@
 package project;
 import java.util.*;
 import java.io.*;
-public class TwoSets2 {
+public class CSESTwoSets2 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int n = readInt();
-		int sum = (n*(n+1))/2; //you could also find the sum using for loop
-		if (sum%2!=0) {
-			System.out.println(0); //if sum is odd, there are no solutions because sum/2 would have a decimal
+		int N = readInt();
+		int sum = N*(N+1)/2;
+		if (sum%2==1) { //if odd, there are no solutions
+			System.out.println(0);
 			return;
 		}
-		sum/=2; //this is the sum that both groups need to add up to
-		long[] dp = new long[sum+1];
-		dp[0] = 1;
-		for (int i=1; i<=n; i++) {
-			for (int j=sum; j>=i; j--) {	
-				dp[j]+=dp[j-i];
-				dp[j]%=1000000007;
+		int max = sum/2; //max is value of each group
+		long[] dp = new long[max+1];
+		dp[0] = 1; //base case
+		for (int i = 1; i<=N; i++) { //N is 1,2,3,4,...N
+			for (int j = max-i; j>=0; j--) { //j = max-i, j will be where you start from since it is the most that is remaining after max-i.
+				System.out.println(Arrays.toString(dp)+"     "+(i+j));
+
+				dp[i+j]=(dp[i+j]+dp[j]); //i+j will decrement inside the inner for loop, dp[j] will keep going down
+				dp[i+j]%=2000000014;
 			}
 		}
-		System.out.println(Arrays.toString(dp));
-		System.out.println(dp[sum]/2);
-		
-		
+		System.out.println(dp[max]/2);
 	}
-	
+
+
+
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
