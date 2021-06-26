@@ -1,4 +1,3 @@
-package project;
 import java.util.*;
 import java.io.*;
 public class CSESMoneySums {
@@ -18,10 +17,20 @@ public class CSESMoneySums {
 		boolean[] possible = new boolean[max+1]; //if possible[i] is true, then we can make a sum of i
 		possible[0] = true;	
 		int count = 0;
-		for (int i=0; i<n; i++) {
+//		for (int i=0; i<n; i++) {
+//			for (int j=max; j>=0; j--) {
+//				if (possible[j]) { //if the sum we are at currently is true, then the sum that we add another coin with would also be true, as long as it is not out of bounds
+//					possible[j+coins[i]] = true;
+//				}
+//			}
+//		}
+		
+		//The code above works too, but the one below is a bit shorter
+		
+		for (int coin: coins) {
 			for (int j=max; j>=0; j--) {
-				if (possible[j]) { //if the sum we are at currently is true, then the sum that we add another coin with would also be true, as long as it is not out of bounds
-					possible[j+coins[i]] = true;
+				if (possible[j]) {
+					possible[j + coin] = true;
 				}
 			}
 		}

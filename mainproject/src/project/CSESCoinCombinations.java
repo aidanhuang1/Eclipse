@@ -9,7 +9,7 @@ public class CSESCoinCombinations {
 		// TODO Auto-generated method stub
 		int n = readInt(), x = readInt();
 		int[] coins = new int[n];
-		for (int i=0; i<n; i++) {
+		for (int i=0; i<n; i++) {	
 			coins[i] = readInt();
 		}
 		long[] dp = new long[x+1];
