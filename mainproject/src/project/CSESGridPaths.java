@@ -1,6 +1,7 @@
+package project;
 import java.util.*;
 import java.io.*;
-public class Main {
+public class CSESGridPaths {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
