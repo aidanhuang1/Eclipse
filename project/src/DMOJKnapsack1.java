@@ -1,30 +1,29 @@
-package project;
+
 import java.util.*;
 import java.io.*;
-public class CSESCoinCombinations2 {
+public class DMOJKnapsack1 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 
+
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int n = readInt(), x = readInt();
-		int[] coins = new int[n];
-		for (int i=0; i<n; i++) {
-			coins[i] = readInt();
-		}
-		long[] dp = new long[x+1];
-		dp[0] = 1;
-		
-		for (int i: coins) {
-			for (int j=0; j<=x; j++) {  //we changed the order of the loops
-				if (j-i>=0) {
-					dp[j] += dp[j-i];
-					dp[j] %= 1000000007;
-				}	
+		int N = readInt(), W = readInt(); //N is number of items, W is the capacity
+		long[] knapsack = new long[10]; //knapsack[i] is the maximum sum for the i capacity
+		for (int i=1; i<=N; i++) {
+			int w = readInt(), v = readInt(); //weight/cost, value
+			
+			for (int j=W; j>=w; j--) { //we look backwards starting from max capacity, we stop at w because our item's weight will not go less than w in that row 
+				
+				knapsack[j] = Math.max(knapsack[(j-w)] + v, knapsack[j]); //knapsack[(j-w)] because your trying to add the previous with the current item's value and seeing if it is bigger
+				System.out.println(Arrays.toString(knapsack));
 			}
+			
 		}
-		System.out.println(dp[x]);
 		
+		Arrays.sort(knapsack);
+		System.out.println(knapsack[9]);
+
 	}
 	
 	static String next() throws IOException {

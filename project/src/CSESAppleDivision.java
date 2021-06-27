@@ -1,4 +1,4 @@
-package project;
+
 import java.util.*;
 import java.io.*;
 public class CSESAppleDivision {
