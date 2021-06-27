@@ -17,7 +17,6 @@ public class CSESTwoSets2 {
 		dp[0] = 1; //base case
 		for (int i = 1; i<=N; i++) { //N is 1,2,3,4,...N
 			for (int j = max-i; j>=0; j--) { //j = max-i, j will be where you start from since it is the most that is remaining after max-i.
-				System.out.println(Arrays.toString(dp)+"     "+(i+j));
 
 				dp[i+j]=(dp[i+j]+dp[j]); //i+j will decrement inside the inner for loop, dp[j] will keep going down
 				dp[i+j]%=2000000014;
