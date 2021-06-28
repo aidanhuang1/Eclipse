@@ -1,10 +1,13 @@
 import java.util.*;
 import java.io.*;
-public class DMOJLongestIncreasingSubsequence {
+public class longestincreasingsubsequenceslow {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
 	
+	/*
+	 * This is a slow implementation with a time complexity of O(n^2)
+	 */
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -13,20 +16,28 @@ public class DMOJLongestIncreasingSubsequence {
 		for (int i=0; i<n; i++) {
 			numbers[i] = readInt();
 		}
-		int[] dp = new int[n];
-		Arrays.fill(dp, 1);
-		int length = 0;
-
-		for (int i=0; i<n; i++) {	
+		int[] length = new int[n];
+		HashSet<Integer> hashset = new HashSet<>();
+		Arrays.fill(length, 1);
+		int lis = 0; //we can find the size of the lis
+		
+		for (int i=0; i<n; i++) {
 			for (int j=0; j<i; j++) {
+				
+				hashset.add(length[i]); //hashset can be used to find unique numbers
+				
 				if (numbers[j]<numbers[i]) {
-					dp[i] = Math.max(dp[i], dp[j]+1);
+					length[i] = Math.max(length[i], length[j]+1);
+					
 				}
-				System.out.println(Arrays.toString(dp)+"   "+i+"  "+j);
 			}
-			length = Math.max(length, dp[i]);
+			lis = Math.max(lis, length[i]);
 		}
-		System.out.println(length);
+		System.out.println(Arrays.toString(length));
+		
+		
+		System.out.println(hashset);
+		System.out.println(lis);
 	}
 	
 	static String next() throws IOException {
