@@ -6,64 +6,43 @@ public class DMOJMatrixOperation {
 	static final int MOD = 1000000007;
 	public static int n, previous = 0, size = 0;
 	public static boolean[][] visited;
-	public static boolean search(int[][] matrix, int row, int col, int prev) {
-		if (row <= 0 || row >= n+1 || col <= 0 || col>=n+1 || visited[row][col] == true) {
-			return false;
+	
+	//Code is complete, rewrite parts of it and submit
+
+	public static int search(int[][] matrix, int row, int col, int prev) {
+		if (row <= 0 || row >= n+1 || col <= 0 || col>=n+1) {
+			return 0;
 		}
-		System.out.println(row+" "+col);
-		if (prev <= matrix[row][col]) {
-			visited[row][col] = true;
-			size++;
-			int direction = 0; //0 = left, 1 = down, 2 = right, 3 = up
-			if (matrix[row+1][col]>=matrix[row][col]) {
-				direction = 1;
-			}
-			if (matrix[row][col+1]>=matrix[row][col]) {
-				direction = 2;
-			}
-			if (matrix[row-1][col]>=matrix[row][col]) {
-				direction = 3;
-			}
-
-			switch (direction) {
-			case 0:
-				search(matrix, row, col-1, matrix[row][col]);
-			case 1:
-				search(matrix, row+1, col, matrix[row][col]);
-			case 2:
-				search(matrix, row, col+1, matrix[row][col]);
-			case 3:
-				search(matrix, row-1, col, matrix[row][col]);
-			}
-
-
+		int ret = 0;
+		if (prev <= matrix[row][col]) { //as you are iterating through every grid in the matrix, you are also using dfs to find and traverse paths that are increasing
+			ret = Math.max(ret, search(matrix, row-1, col, matrix[row][col])+1);
+			ret = Math.max(ret, search(matrix, row+1, col, matrix[row][col])+1);
+			ret = Math.max(ret, search(matrix, row, col-1, matrix[row][col])+1);
+			ret = Math.max(ret, search(matrix, row, col+1, matrix[row][col])+1);
 		}
-		return false;
+		return ret;
 	}
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		n = readInt();
-		int startrow = 0, startcol = 0, start = Integer.MAX_VALUE;
-		int[][] matrix = new int[n+2][n+2];
+
+		int[][] matrix = new int[n+1][n+1];
 		visited = new boolean[n+1][n+1];
 		for (int i=1; i<=n; i++) {
 			for (int j=1; j<=n; j++) {
 				int x = readInt();
 				matrix[i][j] = x;
-				if (x<start) {
-					start = x;
-					startrow = i;
-					startcol = j;
-				}
 			}
 		}
+		int best = 0;
 		for (int i=1; i<=n; i++) {
 			for (int j=1; j<=n; j++) {
-				search(matrix, i, j, 0);//change it to i, j
+				best = Math.max(best, search(matrix, i, j, 0));
+				System.out.println(best+"   "+i+" "+j);
 			}
 		}
-		System.out.println(size);
+		System.out.println(best-1);
 
 
 
