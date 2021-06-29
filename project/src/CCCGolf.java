@@ -13,19 +13,19 @@ public class CCCGolf {
 			clubs[i] = readInt();
 		}
 		Arrays.sort(clubs);
-		int[] hits = new int[distance+1]; //stores the number of strokes to get a distance of index
-		Arrays.fill(hits, Integer.MAX_VALUE); //if at the end index value is max_value, we can't get there
+		int[] hits = new int[distance+1];
+		Arrays.fill(hits, Integer.MAX_VALUE/10);
 		
 		hits[0] = 0;
 		for (int i=1; i<=distance; i++) {
 			for (int j=0; j<clubs.length; j++) {
 				if (i-clubs[j]>=0) {
-					System.out.println(hits[i-clubs[j]]);
 					hits[i] = Math.min(hits[i-clubs[j]]+1, hits[i]);
 				}
 			}	
 		}
-		System.out.println(Arrays.toString(hits));
+		if (hits[distance]==Integer.MAX_VALUE/10) System.out.println("Roberta acknowledges defeat.");
+		else System.out.printf("Roberta wins in %d strokes.", hits[distance]);
 	}
 
 	
