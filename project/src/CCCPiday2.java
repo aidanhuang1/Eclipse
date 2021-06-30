@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 
@@ -48,6 +47,23 @@ public class CCCPiday2 {
 	
 	public static int[][] dp = new int[251][251];//maximum limit for this ccc
 	//dp is here to PREVENT DUPLICATE WORK
+	public static int pie (int curPies, int curPeople) {
+		if (curPies < 0) {
+			return 0;
+		}
+		if (curPies == 0 || curPeople == 1) {
+			return 1;
+		}
+		if (dp[curPies][curPeople] > 0) {
+			return dp[curPies][curPeople];
+		}
+
+		return dp[curPies][curPeople] = pie(curPies, curPeople - 1) + pie(curPies - curPeople, curPeople);
+	}
+	//here with pie(curPies, curPeople - 1), this accounts for moving down the chain (adding another person)
+	//the pie(curPies - curPeople) accounts for adding a pie to this person, which causes a pie to be added to EVERYONE
+	//we don't record how many pies a person may get, we just care about the state of # of people and # of pies
+	//eventually, this finishes everything off
 	
 	public static void main(String[] args) throws IOException{
 		int pies = readInt();
@@ -60,22 +76,7 @@ public class CCCPiday2 {
 		
 	}
 	
-	public static int pie (int curPies, int curPeople) {
-		if (curPies < 0) {
-			return 0;
-		}
-		if (curPies == 0 || curPeople == 1) {
-			return 1;
-		}
-		if (dp[curPies][curPeople] > 0) {
-			return dp[curPies][curPeople];
-		}
-		return dp[curPies][curPeople] = pie(curPies, curPeople - 1) + pie(curPies - curPeople, curPeople);
-	}
-	//here with pie(curPies, curPeople - 1), this accounts for moving down the chain (adding another person)
-	//the pie(curPies - curPeople) accounts for adding a pie to this person, which causes a pie to be added to EVERYONE
-	//we don't record how many pies a person may get, we just care about the state of # of people and # of pies
-	//eventually, this finishes everything off
+	
 	
 	static String next () throws IOException {
 		while (st == null || !st.hasMoreTokens())
