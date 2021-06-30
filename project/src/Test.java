@@ -7,29 +7,24 @@ public class Test {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int N = readInt();
-		ArrayList<Integer>[] slides = new ArrayList[N];
-		int[] paths = new int[N];
-		paths[0] = 1;
-		for (int i=0; i<slides.length; i++) {
-			slides[i] = new ArrayList<Integer>();
- 		}
-		
-		while (true) {
-			int x = readInt()-1, y = readInt()-1;
-			if (x==-1 && y==-1) {
-				break;
-			}
-			slides[x].add(y);
+		int n = readInt(), x = readInt();
+		int[] coins = new int[n];
+		for (int i=0; i<n; i++) { 
+			coins[i] = readInt();
 		}
-		
-		for (int i=0; i<N; i++) {
-			for (int j: slides[i]) {
-				paths[j] = paths[j]+paths[i];
+		Arrays.sort(coins);
+		long[] dp = new long[x+1];
+		dp[0] = 1;
+		for (int i: coins) {
+			for (int j=0; j<=x; j++) {
+				if (dp[j]!=0 && j+i<=x) {
+					dp[j+i]+=dp[j];
+					dp[j+i]%=MOD;
+				}
+				
 			}
 		}
-		System.out.println(paths[N-1]);
-		
+		System.out.println(dp[x]);
 	}
 	
 	static String next() throws IOException {

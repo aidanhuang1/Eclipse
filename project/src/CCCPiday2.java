@@ -10,9 +10,9 @@ public class CCCPiday2 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	
-	//have a dp[i][j]
-	//i is # of pies
-	//j is # of people
+	//have a dp[n][k]
+	//n is # of pieces of pie
+	//k is # of people
 	//give 1 pie to everyone to start off
 	/*
 	 * Go down recursively
@@ -31,49 +31,56 @@ public class CCCPiday2 {
 	 * we have 2, 2, 2, 2
 	 * kinda like a depth first search???
 	 * dp will have two choices
-	 * dp[i][j - 1] (move down to the next person
-	 * dp[i-j][j] give a pie to everyone from i to the end (hence subtracting j pies)
-	 * base case: fun(pie, people) (fun is function)
-	 * if pie = 0 || people == 1
+	 * dp[n][k - 1] (move down to the next person
+	 * dp[n-k][k] give a pie to everyone from n to the end (hence subtracting k n)
+	 * base case: fun(pie, k) (fun is function)
+	 * if pie = 0 || k == 1
 	 * just one possible way
 	 * pie == 0 > noone gets pie
-	 * people == 1? -> plast person gets all pies
-	 * dp[pie][people] = fun(pie, people - 1) + fun(pie-people, people)
+	 * k == 1? -> plast person gets all n
+	 * dp[pie][k] = fun(pie, k - 1) + fun(pie-k, k)
 	 * call the function like this: fun(n - k, k) (where we give 1 pie to everyone to start it off
 	 * 
 	 */
 	
 	//ccc2015 j5
 	
-	public static int[][] dp = new int[251][251];//maximum limit for this ccc
+	public static int[][] dp;//maximum limit for this ccc
 	//dp is here to PREVENT DUPLICATE WORK
-	public static int pie (int curPies, int curPeople) {
-		if (curPies < 0) {
+	public static int pie (int n, int k) {
+		if (n < 0) {
 			return 0;
 		}
-		if (curPies == 0 || curPeople == 1) {
+		if (n == 0 || k == 1) {
 			return 1;
 		}
-		if (dp[curPies][curPeople] > 0) {
-			return dp[curPies][curPeople];
+		if (dp[n][k] > 0) {
+			return dp[n][k];
 		}
-
-		return dp[curPies][curPeople] = pie(curPies, curPeople - 1) + pie(curPies - curPeople, curPeople);
+		
+		dp[n][k] = pie(n, k - 1) + pie(n - k, k);
+		
+		return dp[n][k];
 	}
-	//here with pie(curPies, curPeople - 1), this accounts for moving down the chain (adding another person)
-	//the pie(curPies - curPeople) accounts for adding a pie to this person, which causes a pie to be added to EVERYONE
-	//we don't record how many pies a person may get, we just care about the state of # of people and # of pies
+	//here with pie(n, k - 1), this accounts for moving down the chain (adding another person)
+	//the pie(n - k) accounts for adding a pie to this person, which causes a pie to be added to EVERYONE
+	//we don't record how many n a person may get, we just care about the state of # of k and # of n
 	//eventually, this finishes everything off
 	
 	public static void main(String[] args) throws IOException{
-		int pies = readInt();
-		int people = readInt();
-		if (pies == people) {
+		int n = readInt();
+		int k = readInt();
+		dp = new int[n+1][n+1];
+		if (n == k) {
 			System.out.println(1);
 			return;
 		}
-		System.out.println(pie(pies - people, people));
 		
+		System.out.println(pie(n - k, k));
+		for (int[] i: dp) {
+			System.out.println(Arrays.toString(i));
+		}
+		System.out.println();
 	}
 	
 	

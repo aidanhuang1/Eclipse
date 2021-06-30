@@ -1,38 +1,47 @@
 import java.util.*;
 import java.io.*;
-public class CCCPiday {
+public class CSESEditDistance {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
-	static int[][] dp;
 
-	public static void search(int n, int k) {
-		dp = new int[n+1][n+1];
-		Arrays.fill(dp[0], 1);
-		for (int i=1; i<=k; i++) {		
-			dp[i][i] = 1;
-			for (int j=i+1; j<=n; j++) {
-				dp[i][j] = dp[i-1][j-1]+dp[i][j-i-1];
+	static String s1, s2;
+	static int[][] dp;
+	
+	/*
+	 * Code retrieved from another user on CSES
+	 */
+	
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		
+		s1 = in.next();
+		s2 = in.next();
+		
+		dp = new int[s1.length()+1][s2.length()+1];
+		
+		for(int i = 1; i < dp.length; i++) {
+			dp[i][0] = i;
+		}
+		
+		for(int j = 1; j < dp[0].length; j++) {
+			dp[0][j] = j;
+		}
+		
+		for(int i = 1; i < dp.length; i++) {
+			for(int j = 1; j < dp[i].length; j++) {
+				if(s1.charAt(i-1) == s2.charAt(j-1)) {
+					dp[i][j] = dp[i-1][j-1];
+				}else {
+					dp[i][j] = 1 + Math.min(Math.min(dp[i-1][j-1], dp[i][j-1]), dp[i-1][j]);
+				}
 			}
 		}
-		System.out.println(dp[k-1][n-1]);
-
+		
+		System.out.println(dp[s1.length()][s2.length()]);
 	}
-
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		int n = readInt(), k = readInt();
-		if (k==n || k==1) {
-			System.out.println(1);
-			return;
-		}	
-		search(n, k);
-		for (int[] i: dp) {
-			System.out.println(Arrays.toString(i));
-		}
-		System.out.println();
-	}
-
+	
+	
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
