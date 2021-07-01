@@ -1,6 +1,6 @@
 import java.util.*;
 import java.io.*;
-public class Test {
+public class IOITheTriangle {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
