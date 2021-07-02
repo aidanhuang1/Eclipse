@@ -30,6 +30,8 @@ public class CCCPiday2 {
 	 * we can't do anything further, so we just go up one more time, give one more to first person
 	 * we have 2, 2, 2, 2
 	 * kinda like a depth first search???
+	 * 
+	 * 
 	 * dp will have two choices
 	 * dp[n][k - 1] (move down to the next person
 	 * dp[n-k][k] give a pie to everyone from n to the end (hence subtracting k n)
