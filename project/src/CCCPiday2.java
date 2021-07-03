@@ -50,8 +50,7 @@ public class CCCPiday2 {
 	public static int[][] dp;//maximum limit for this ccc
 	//dp is here to PREVENT DUPLICATE WORK
 	public static int pie (int n, int k) {
-		System.out.println(n+"  "+k);
-		if (n < 0) {
+		if (n < k) {
 			return 0;
 		}
 		if (n == 0 || k == 1) {
@@ -61,7 +60,7 @@ public class CCCPiday2 {
 			return dp[n][k];
 		}
 		
-		dp[n][k] = pie(n, k - 1) + pie(n - k, k);
+		dp[n][k] = pie(n-1, k - 1) + pie(n - k, k);
 		
 		return dp[n][k];
 	}
@@ -81,7 +80,7 @@ public class CCCPiday2 {
 			return;
 		}
 		
-		System.out.println(pie(n - k, k));
+		System.out.println(pie(n, k));
 		
 		
 		
