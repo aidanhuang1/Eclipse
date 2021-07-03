@@ -7,33 +7,11 @@ public class Test {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int n = readInt();
-		int[][] dp = new int[n][n];
-		for (int i[]: dp) {
-			Arrays.fill(i, -1);
-		}
-		System.out.println();
-		for (int i=0; i<n; i++) {
-			for (int j=0; j<=i; j++) {
-				int number = readInt();
-				if (i==0) {
-					dp[i][j] = number;
-				} else if (i==j) {
-					dp[i][j] = dp[i-1][j-1]+number;
-				} else if (j==0) {
-					dp[i][j] = dp[i-1][j]+number;
-				} else {
-					dp[i][j] = Math.max(dp[i-1][j-1], dp[i-1][j]) + number;
-				}
-			}
-
-		}
-		int max = 0;
-		for (int i=0; i<n; i++) {
-			max = Math.max(max, dp[n-1][i]);
-		}
-		System.out.println(max);
-
+		Deque<Integer> dq = new LinkedList<>();
+		dq.add(1);
+		dq.add(2);
+		dq.add(3);
+		System.out.println(dq.removeLast());
 
 	}
 	static String next() throws IOException {

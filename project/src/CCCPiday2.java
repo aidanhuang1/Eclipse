@@ -50,12 +50,13 @@ public class CCCPiday2 {
 	public static int[][] dp;//maximum limit for this ccc
 	//dp is here to PREVENT DUPLICATE WORK
 	public static int pie (int n, int k) {
+		System.out.println(n+"  "+k);
 		if (n < 0) {
 			return 0;
 		}
 		if (n == 0 || k == 1) {
 			return 1;
-		}
+		}	
 		if (dp[n][k] > 0) {
 			return dp[n][k];
 		}
@@ -64,6 +65,8 @@ public class CCCPiday2 {
 		
 		return dp[n][k];
 	}
+	
+		
 	//here with pie(n, k - 1), this accounts for moving down the chain (adding another person)
 	//the pie(n - k) accounts for adding a pie to this person, which causes a pie to be added to EVERYONE
 	//we don't record how many n a person may get, we just care about the state of # of k and # of n
@@ -79,10 +82,13 @@ public class CCCPiday2 {
 		}
 		
 		System.out.println(pie(n - k, k));
+		
+		
+		
 		for (int[] i: dp) {
 			System.out.println(Arrays.toString(i));
 		}
-		System.out.println();
+		System.out.println();	
 	}
 	
 	
