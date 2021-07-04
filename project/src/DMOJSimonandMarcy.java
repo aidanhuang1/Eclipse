@@ -1,45 +1,25 @@
 import java.util.*;
 import java.io.*;
-public class Test {
+public class DMOJSimonandMarcy {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
-	static char[][] grids;
-	static long[][] dp;
-	static int h, w;
-	
-	public static long search(int r, int c) {
-		dp[1][1] = 1;
-		for (int i=r; i<=h; i++) {
-			for (int j=c; j<=w; j++) {
-				if (grids[i][j]=='.') {
-					dp[i][j] += dp[i-1][j] + dp[i][j-1];
-					dp[i][j]%=MOD;
-				} else if (grids[i][j]=='#') {
-					dp[i][j] = 0;
-				}
-			}
-		}
-		return dp[h][w];
-	}
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		h = readInt();
-		w = readInt();
-		grids = new char[h+1][w+1];
-		dp = new long[h+1][w+1];
-		for (int i=1; i<=h; i++) {
-			String[] temp = readLine().split("");
-			for (int j=1; j<=w; j++) {
-				grids[i][j] = temp[j-1].charAt(0);
+		int c = readInt(), m = readInt();
+		int[] dp = new int[m+1];
+		for (int i=1; i<=c; i++) {
+			int n = readInt(), k = readInt(); //n = value, k = cost
+			for (int j=m; j>=k; j--) { //j starts from max capacity and goes down until j is equal to k (and in which j-k == 0)
+				dp[j] = Math.max(dp[j-k]+n, dp[j]);
 			}
+			System.out.println(Arrays.toString(dp));
 		}
-		System.out.println(search(1, 1));
-
+		System.out.println(dp[m]);
+		
 
 	}
-
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());

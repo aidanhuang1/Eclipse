@@ -1,42 +1,30 @@
 import java.util.*;
 import java.io.*;
-public class Test {
+public class DMOJSimonandMarcy2 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
-	static char[][] grids;
-	static long[][] dp;
-	static int h, w;
 	
-	public static long search(int r, int c) {
-		dp[1][1] = 1;
-		for (int i=r; i<=h; i++) {
-			for (int j=c; j<=w; j++) {
-				if (grids[i][j]=='.') {
-					dp[i][j] += dp[i-1][j] + dp[i][j-1];
-					dp[i][j]%=MOD;
-				} else if (grids[i][j]=='#') {
-					dp[i][j] = 0;
-				}
-			}
-		}
-		return dp[h][w];
-	}
+	//2d array version of Simon and Marcy
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		h = readInt();
-		w = readInt();
-		grids = new char[h+1][w+1];
-		dp = new long[h+1][w+1];
-		for (int i=1; i<=h; i++) {
-			String[] temp = readLine().split("");
-			for (int j=1; j<=w; j++) {
-				grids[i][j] = temp[j-1].charAt(0);
-			}
+		int c = readInt(), m = readInt();
+		int[][] dp = new int[c+1][m+1];
+		int[] p = new int[c+1], s = new int[c+1];
+		for (int i=1; i<=c; i++) {
+			p[i] = readInt();
+			s[i] = readInt();
 		}
-		System.out.println(search(1, 1));
-
+		for (int i=1; i<=c; i++) {
+			for (int j=1; j<=m; j++) {
+				dp[i][j] = dp[i-1][j];	
+				if (j >= s[i] && dp[i-1][j-s[i]] + p[i]>dp[i][j]) {
+					dp[i][j] = dp[i-1][j-s[i]] + p[i];
+				}
+			}	
+		}
+		System.out.println(dp[c][m]);
 
 	}
 
