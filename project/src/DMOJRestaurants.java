@@ -13,28 +13,17 @@ public class DMOJRestaurants {
 		for (int i=0; i<v; i++) {
 			dp[readInt()] = true;
 		}
-		Deque<Integer> dq = new LinkedList<>();
-		int count = 0, same_segment = 0;
-		for (int i=1; i<=n; i++) {
-			if (dp[i]) {
-				same_segment++;
-			} else if (!dp[i]) {
-				dq.add(i);
-			}
-			if (i%t==0 && same_segment >= k) {
-				same_segment = 0;
-			}
-			else if (i%t==0 && same_segment < k) {
-				while (same_segment < k) {
-					dp[dq.removeLast()] = true;
-					same_segment++;
-					count++;
-				}
-				same_segment = 0;
-			}System.out.println(Arrays.toString(dp)+" "+same_segment);
+		int sa = n/t+1;
+		System.out.println(sa);
+		int[] subarrays = new int[sa];
+		int buffer = n%t;
+		for (int i=0; i<n/t; i++) {
+			subarrays[i] = 1 + (i*t);
 		}
-		
-		System.out.println(count);
+		if (buffer != 0) {
+			subarra
+		}
+		System.out.println(Arrays.toString(subarrays));
 	}
 	
 	static String next() throws IOException {

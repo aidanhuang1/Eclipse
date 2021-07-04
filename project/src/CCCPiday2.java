@@ -4,6 +4,8 @@ import java.util.*;
 /*
  * This is code 
  * taken from another user (appleater), review and learn
+ * 
+ * NOTE I CHANGED PIE(N, K-1) TO PIE(N-1, K-1)
  */
 
 public class CCCPiday2 {
