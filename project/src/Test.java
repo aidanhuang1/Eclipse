@@ -3,40 +3,24 @@ import java.io.*;
 public class Test {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
-	static final int MOD = 1000000007;
-	static char[][] grids;
-	static long[][] dp;
-	static int h, w;
-	
-	public static long search(int r, int c) {
-		dp[1][1] = 1;
-		for (int i=r; i<=h; i++) {
-			for (int j=c; j<=w; j++) {
-				if (grids[i][j]=='.') {
-					dp[i][j] += dp[i-1][j] + dp[i][j-1];
-					dp[i][j]%=MOD;
-				} else if (grids[i][j]=='#') {
-					dp[i][j] = 0;
-				}
-			}
-		}
-		return dp[h][w];
-	}
+
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		h = readInt();
-		w = readInt();
-		grids = new char[h+1][w+1];
-		dp = new long[h+1][w+1];
-		for (int i=1; i<=h; i++) {
-			String[] temp = readLine().split("");
-			for (int j=1; j<=w; j++) {
-				grids[i][j] = temp[j-1].charAt(0);
+		int n = readInt(), k = readInt();
+		int[] stones = new int[n];
+		for (int i=0; i<n; i++) {
+			stones[i] = readInt();
+		}
+		boolean[] dp = new boolean[k+1];
+		for (int i=0; i<=k; i++) {
+			for (int j: stones) {
+				if (i-j>=0 && !dp[i-j]) {
+					dp[i] = true;
+				}
 			}
 		}
-		System.out.println(search(1, 1));
-
+		System.out.println((dp[k]) ? "First":"Second");
 
 	}
 

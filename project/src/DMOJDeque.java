@@ -1,31 +1,32 @@
 import java.util.*;
 import java.io.*;
-public class DMOJStones {
+public class DMOJDeque {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
-	
+
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		
-		//TRY AND REWRITE THE SOLUTION, WITHOUT REFERRING TO THE CODE
-		
-		int n = readInt(), k = readInt();
-		int[] stones = new int[n];
+		int n = readInt();
+		long[][] dp = new long[n][n];
+		int[] seq = new int[n];
 		for (int i=0; i<n; i++) {
-			stones[i] = readInt();
+			int temp = readInt();
+			seq[i] = temp;
+			dp[i][i] = temp;
 		}
-		boolean[] dp = new boolean[k+1];
-		for (int i=1; i<=k; i++) {
-			for (int j: stones) {
-				if (i-j>=0) {
-					if (!dp[i-j]) {
-						dp[i] = true;
-					}
+		for (int i=n-1; i>=0; i--) {
+			for (int j=i+1; j<n; j++) {
+				dp[i][j] = Math.max(seq[i]-dp[i+1][j], seq[j]-dp[i][j-1]);
+				for (long k[]: dp) {
+					System.out.println(Arrays.toString(k));
 				}
+				System.out.println();
 			}
+			
 		}
-		System.out.println((dp[k]) ? "First" : "Second");
+		
+		System.out.println(dp[0][n-1]);
 
 	}
 	
