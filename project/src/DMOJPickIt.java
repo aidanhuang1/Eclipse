@@ -1,42 +1,28 @@
 import java.util.*;
 import java.io.*;
-public class CCCBowlingforNumbers {
+public class DMOJPickIt {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
+	
+	/*
+	 * Create a 2d array
+	 * dp[i][j] represents the max score using i-2 moves, where i is the number of moves and j is/are the numbers chosen
+	 */
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int t = readInt();
-		
-		while(t-->0) {
-			int n = readInt(), k = readInt(), w = readInt();
-			long[][] dp = new long[k+1][n]; 
-			int[] pins = new int[n+1], sums = new int[n];
-			for (int i=0; i<n; i++) {
-				pins[i] = readInt();
-				for (int j=0; j<w; j++){ 
-					if (i-j>=0) {
-						sums[i] += pins[i-j];
-					}
-				}
+		while (true) {
+			int n = readInt();
+			if (n==0) break;
+			int[] number = new int[n+1];
+			for (int i=1; i<=n; i++) {
+				number[i] = readInt();
 			}
-			
-			for (int i=1; i<=k; i++) {
-				for (int j=1; j<n; j++) {
-					if (j-w < 0) {
-						dp[i][j] = sums[j];
-					} else {
-						dp[i][j] = Math.max(dp[i-1][j-w]+sums[j], dp[i][j-1]);
-					}
-				}
-			}
-
-			System.out.println(dp[k][n-1]);
-
+			int[][] dp = new int
 		}
-	}
 
+	}
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
@@ -62,4 +48,5 @@ public class CCCBowlingforNumbers {
 	static String readLine() throws IOException {
 		return br.readLine().trim();
 	}
+
 }
