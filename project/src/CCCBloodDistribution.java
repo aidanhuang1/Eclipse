@@ -18,7 +18,7 @@ public class CCCBloodDistribution {
 		int total = 0;
 		int oneg = readInt(), opos = readInt(), aneg = readInt(), apos = readInt(), bneg = readInt(), bpos = readInt(), abneg = readInt(), abpos = readInt();
 		int poneg = readInt(), popos = readInt(), paneg = readInt(), papos = readInt(), pbneg = readInt(), pbpos = readInt(), pabneg = readInt(), pabpos = readInt();
-
+		
 		//negative
 		//o
 		while (oneg>0 &&poneg>0) {
