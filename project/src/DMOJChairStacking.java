@@ -6,7 +6,8 @@ public class DMOJChairStacking {
 	static final int MOD = 1000000007;
 	
 	/*
-	 * Maybe it is like 
+	 * Maybe it is like we start off with putting chair locations on a 2d array
+	 * 
 	 */
 
 	public static void main(String[] args) {
