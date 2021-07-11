@@ -1,6 +1,6 @@
 import java.util.*;
 import java.io.*;
-public class CCOGeesevsHawks {
+public class CCOGeesevsHawks2 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
@@ -11,30 +11,33 @@ public class CCOGeesevsHawks {
 		int n = readInt();
 		char[] result1 = new char[n+1], result2 = new char[n+1];
 		int[] goals1 = new int[n+1], goals2 = new int[n+1];
-		String[] temp1 = readLine().split("");
+		String[] first1 = readLine().split("");
 		for (int i=1; i<=n; i++) {
-			result1[i] = temp1[i-1].charAt(0);
+			result1[i] = first1[i-1].charAt(0);
 			goals1[i] = readInt();
 		}
-		String[] temp2 = readLine().split("");
+		String[] first2 = readLine().split("");
 		for (int i=1; i<=n; i++) {
-			result2[i] = temp2[i-1].charAt(0);
+			result2[i] = first2[i-1].charAt(0);
 			goals2[i] = readInt();
 		}
+		int first = 0, second=0, third=0,fourth=0;
 
 
 		int[][] dp = new int[n+1][n+1];
-		int temp = 0;
 		for (int i=1; i<=n; i++) {
 			for (int j=1; j<=n; j++) {
 				if (result1[i]=='W' && result2[j]=='L' && goals1[i]>goals2[j]) {
-					temp = dp[i-1][j-1] + goals1[i] + goals2[j];
+					first = dp[i-1][j-1] + goals1[i] + goals2[j];
 				} else if (result1[i]=='L' && result2[j]=='W' && goals1[i]<goals2[j]) {
-					temp = dp[i-1][j-1] + goals1[i] + goals2[j];
+					first = dp[i-1][j-1] + goals1[i] + goals2[j];
 				} else {
-					temp = 0;
+					first = 0;
 				}
-				dp[i][j] = Math.max(temp, Math.max(dp[i-1][j-1], Math.max(dp[i-1][j], dp[i][j-1])));
+				second = dp[i-1][j-1];
+				third = dp[i-1][j];
+				fourth = dp[i][j-1];
+				dp[i][j] = Math.max(first, Math.max(second, Math.max(third, fourth)));
 			}
 		}
 		System.out.println(dp[n][n]);
