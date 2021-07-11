@@ -4,75 +4,43 @@ public class CCOGeesevsHawks {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
-	
-	/*
-	 * Create a 2d array nxn
-	 * columns represent the 
-	 *we start from first line first number, 
-	 *compare it to all the numbers on the next line starting from left to right
-	 * if the two numbers fit the conditions and we have a sum, we add it to the row i
-	 * dp[i][j] = Math.max(dp[i][j-1], team1+team2+dp[i-1][j
-	 * 
-	 * maybe we also keep a visited array?
-	 * greedy algorithms, create a class and use priorityqueue
-	 * 
-	 */
-	
-	public static class game implements Comparable<game>{
-		char c;
-		int points;
-		public game(char c, int points) {
-			this.c = c;
-			this.points = points;
-		}
-		@Override
-		public int compareTo(CCOGeesevsHawks.game o) {
-			// TODO Auto-generated method stub
-			return o.points-points;
-			
-		}
-	}
+
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		int n = readInt();
-		PriorityQueue<game> pq1 = new PriorityQueue<>();
-		PriorityQueue<game> pq2 = new PriorityQueue<>();
+		char[] result1 = new char[n+1], result2 = new char[n+1];
+		int[] goals1 = new int[n+1], goals2 = new int[n+1];
 		String[] temp1 = readLine().split("");
-		for (int i=0; i<n; i++) {
-			pq1.add(new game(temp1[i].charAt(0), readInt()));
+		for (int i=1; i<=n; i++) {
+			result1[i] = temp1[i-1].charAt(0);
+			goals1[i] = readInt();
 		}
 		String[] temp2 = readLine().split("");
-		for (int i=0; i<n; i++) {
-			pq2.add(new game(temp2[i].charAt(0), readInt()));
+		for (int i=1; i<=n; i++) {
+			result2[i] = temp2[i-1].charAt(0);
+			goals2[i] = readInt();
 		}
+
+
 		int[][] dp = new int[n+1][n+1];
-		
+		int temp = 0;
 		for (int i=1; i<=n; i++) {
 			for (int j=1; j<=n; j++) {
-				
+				if (result1[i]=='W' && result2[j]=='L' && goals1[i]>goals2[j]) {
+					temp = dp[i-1][j-1] + goals1[i] + goals2[j];
+				} else if (result1[i]=='L' && result2[j]=='W' && goals1[i]<goals2[j]) {
+					temp = dp[i-1][j-1] + goals1[i] + goals2[j];
+				} else {
+					temp = 0;
+				}
+				dp[i][j] = Math.max(temp, Math.max(dp[i-1][j-1], Math.max(dp[i-1][j], dp[i][j-1])));
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		while(!pq2.isEmpty()) {
-//			game temp = pq2.poll();
-//			System.out.println(temp.c+" "+temp.points);
-//		}
-		
+		System.out.println(dp[n][n]);
 
 	}
-	
+
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());

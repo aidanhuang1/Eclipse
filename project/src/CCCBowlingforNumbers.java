@@ -41,7 +41,7 @@ public class CCCBowlingforNumbers {
                       	w width places to the left OR the previous result in the same row one to the left.
                       	
                       	
-                      	dp[i-1][j-w] makes sense because we are taking the total sum from that last row
+                      	dp[i-1][j-w] is sensible because we are taking the total sum from that last row
                       	with a distance spacing of w (because of the width) and adding to it
                       	the sum[j], which is the knockable value with its neighbouring pins
                       	
