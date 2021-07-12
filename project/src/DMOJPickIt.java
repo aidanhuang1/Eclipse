@@ -19,21 +19,30 @@ public class DMOJPickIt {
 			for (int i=1; i<=n; i++) {
 				numbers[i] = readInt();
 			}
-			neighboursums = numbers.clone(); //make a copy
-			for (int i=1; i<=n; i++) {
-				if (i+1<=n) {
+//			neighboursums = numbers.clone(); //make a copy
+			for (int i=2; i<n; i++) {
+//				if (i+1<=n) {
+					neighboursums[i] += numbers[i];
 					neighboursums[i] += numbers[i+1];
-				}
-				if (i-1>=1) {
+//				}
+//				if (i-1>=1) {
 					neighboursums[i] += numbers[i-1];
+//				}
+			}
+			System.out.println(Arrays.toString(neighboursums));
+			//so now we have our numbers and the neighbouring sums
+			int[][] dp = new int[n+1][n+1];
+			for (int i=1; i<=n; i++) {
+				int size = n;
+				for (int j=1; j<=n; j++) {
+					if (size>2) { //if it is within the size constraints
+						dp[i][j] = Math.max(dp[i-1][j-1], dp[i][j-1]+neighboursums[j]);
+						size++;
+					}
 				}
 			}
-			//so now we have our numbers and the neighbouring sums
-			
-			for (int i=1; i<=n; i++) {
-				for (int j=1; j<=n; j++) {
-					
-				}
+			for (int i[]: dp) {
+				System.out.println(Arrays.toString(i));
 			}
 			
 			
