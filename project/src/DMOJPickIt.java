@@ -4,52 +4,46 @@ public class DMOJPickIt {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
-
-	/*
-	 * Create a 2d array
-	 * dp[i][j] represents the current max score where i is the # of times a number is remove and j is the number location
-	 */
+	static int[] nums, sums;
+	static int[][] dp;
+	
+	public static int search(int l, int r) {
+		int temp = 0;
+		if (l==r) {
+			return 0;
+		}
+		else if (dp[l][r]!=-1) {
+			return dp[l][r];
+		}
+		for (int i=l+1; i<=r-1; i++) {
+			int sum = nums[i]+nums[l]+nums[r];
+			temp = Math.max(temp, sum+search(l,i)+search(i,r));
+		}
+		return dp[l][r] = temp;
+	}
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		while (true) {
-			int n = readInt(); //size of list
+			int n = readInt();
 			if (n==0) break;
-			int[] numbers = new int[n+1], neighboursums = new int[n+1];
-			for (int i=1; i<=n; i++) {
-				numbers[i] = readInt();
+			nums = new int[n];
+			sums = new int[n];
+			for (int i=0; i<n; i++) {
+				nums[i] = readInt();
 			}
-//			neighboursums = numbers.clone(); //make a copy
-			for (int i=2; i<n; i++) {
-//				if (i+1<=n) {
-					neighboursums[i] += numbers[i];
-					neighboursums[i] += numbers[i+1];
-//				}
-//				if (i-1>=1) {
-					neighboursums[i] += numbers[i-1];
-//				}
+			for (int i=1; i<n-1; i++) {
+				sums[i] = nums[i]+nums[i-1]+nums[i+1];
 			}
-			System.out.println(Arrays.toString(neighboursums));
-			//so now we have our numbers and the neighbouring sums
-			int[][] dp = new int[n+1][n+1];
-			for (int i=1; i<=n; i++) {
-				int size = n;
-				for (int j=1; j<=n; j++) {
-					if (size>2) { //if it is within the size constraints
-						dp[i][j] = Math.max(dp[i-1][j-1], dp[i][j-1]+neighboursums[j]);
-						size++;
-					}
-				}
-			}
+			dp = new int[n][n];
 			for (int i[]: dp) {
-				System.out.println(Arrays.toString(i));
+				Arrays.fill(i, -1);
 			}
-			
+			System.out.println(search(0, n-1));
 			
 		}
-
-
 	}
+
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());

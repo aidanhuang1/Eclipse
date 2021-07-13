@@ -7,17 +7,26 @@ public class DMOJPickIt2 {
 	static int[][] dp;
 	static int[] ary;
 	public static int recur (int left, int right) { //left and right are the ranges
-	    if (left==right) {
-	    	return 0;
-	    }
-	    if (dp[left][right]!=-1) {
-	    	return dp[left][right];
-	    }
-	    int ans = 0;
-	    for (int i = left + 1; i <= right-1; i++) { //i=left+1 because we are now going one more to the right, and i<=right-1 because we not going further than that
-	    	ans = Math.max(ans, ary[left]+ary[right]+ary[i] + recur(left,i) + recur(i,right) ); 
-	    }
-	    return dp[left][right] = ans;
+		if (left==right) {
+			return 0;
+		}
+
+		if (dp[left][right]!=-1) {
+			return dp[left][right];
+		}
+		System.out.print(left+" "+right+"     ");
+		int ans = 0;
+		for (int i = left + 1; i <= right-1; i++) { //i=left+1 because we are now going one more to the right, and i<=right-1 because we not going further than that
+			ans = Math.max(ans, ary[left]+ary[right]+ary[i] + recur(left,i) + recur(i,right) ); //we do recur(left, i) because 
+		}
+
+		/*recur(left, i) + recur(i, right)
+		 *
+		 *if we put in 0 4 originally
+		 *left = 0, i = 1
+		 */
+
+		return dp[left][right] = ans;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -30,7 +39,7 @@ public class DMOJPickIt2 {
 			for (int i=0; i<n; i++) {
 				ary[i] = readInt();
 			}
-			
+
 			for (int i[]: dp) {
 				Arrays.fill(i, -1);
 			}
@@ -38,8 +47,8 @@ public class DMOJPickIt2 {
 			for (int i[]: dp) {
 				System.out.println(Arrays.toString(i));
 			}
-			
-			
+
+
 		}
 
 
