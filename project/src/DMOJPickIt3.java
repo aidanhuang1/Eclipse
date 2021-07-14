@@ -6,7 +6,7 @@ public class DMOJPickIt3 {
 	static StringTokenizer st;
 	
 	/*
-	 * Bruce's code on DMOJ PickIt
+	 * Bruce's code on DMOJ PickIt (which uses Interval DP) https://www.fatalerrors.org/a/stone-merging-interval-dp-template.html
 	 */
 	public static void main(String[] args) throws IOException {
 		while(true) {
@@ -18,6 +18,8 @@ public class DMOJPickIt3 {
 			for(int i=1; i<=n; i++) {
 				a[i] = readInt();
 			}
+			
+			
 			for(int len=2; len<n; len++) {
 				for(int L=1; L+len<=n; L++) {
 					int R = L + len;

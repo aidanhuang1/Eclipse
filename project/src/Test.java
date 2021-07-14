@@ -7,21 +7,20 @@ public class Test {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int n = readInt(), k = readInt();
-		int[] stones = new int[n];
+		int n = readInt();
+		int[] nums = new int[n];
+		int[][] dp = new int[n][n];
 		for (int i=0; i<n; i++) {
-			stones[i] = readInt();
+			nums[i] = readInt();
+			dp[i][i] = nums[i];
 		}
-		boolean[] dp = new boolean[k+1];
-		for (int i=0; i<=k; i++) {
-			for (int j: stones) {
-				if (i-j>=0 && !dp[i-j]) {
-					dp[i] = true;
-				}
+		for (int i=n-1; i>=0; i--) {
+			for (int j=i+1; j<n; j++) {
+				dp[i][j] = Math.max(nums[i]-dp[i+1][j], nums[j]-dp[i][j-1]);
 			}
 		}
-		System.out.println((dp[k]) ? "First":"Second");
-
+		System.out.println(dp[0][n-1]);
+		
 	}
 
 	static String next() throws IOException {

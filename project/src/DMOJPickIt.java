@@ -7,6 +7,10 @@ public class DMOJPickIt {
 	static int[] nums, sums;
 	static int[][] dp;
 	
+	/*
+	 * Interval DP
+	 */
+	
 	public static int search(int l, int r) {
 		int temp = 0;
 		if (l==r) {

@@ -8,9 +8,7 @@ public class DMOJChairStacking {
 	static int n, x_max, y_max;
 	static boolean[][] visited;
 	/*
-	 * Maybe it is like we start off with putting chair locations on a 2d array
-	 * Find distance to every grid for every chair and add the values for each chair at that grid.
-	 *  At tthe end we find the grid with the lowest value
+	 * we can start at a corner and from there we try to travel to
 	 */
 	
 	public static int traverse(int i, int j, int value) {
