@@ -1,49 +1,32 @@
 import java.util.*;
 import java.io.*;
-public class DMOJLongestPath {
+public class DMOJCoinChange {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
-	static boolean[] visited;
-	static ArrayList<Integer>[] list;
-	static int[] dp;
-	public static int dfs(int v) {
-		if (dp[v]!=-1) return dp[v];
-		int max = 0;
-		for (int u: list[v]) {
-			max = Math.max(dfs(u)+1, max);
-		}
-		return dp[v] = max;
-	}
-	
+
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int n = readInt(), m = readInt();
-		list = new ArrayList[n+1];
-		visited = new boolean[n+1];
-		dp = new int[n+1];
+		int x = readInt();
+		int n = readInt();
+		int[] coins = new int[n+1];
 		for (int i=1; i<=n; i++) {
-			list[i] = new ArrayList<Integer>();
+			coins[i] = readInt();
 		}
-	
-		for (int i=1; i<=m; i++) {
-			list[readInt()].add(readInt());
-		}
-		Arrays.fill(dp, -1);
-		for (int i=1; i<=n; i++) {
-			if (!visited[i]) {
-				dfs(i);
+		int[] dp = new int[x+1];
+		
+		Arrays.fill(dp, Integer.MAX_VALUE/10);
+		dp[0] = 0;
+		for (int i=1; i<=x; i++) {
+			for (int j=1; j<=n; j++) {
+				if (i-coins[j]>=0) {
+					dp[i] = Math.min(dp[i-coins[j]]+1, dp[i]);
+				}
 			}
 		}
-		int max = 0;
-		for (int i: dp) {
-			max = Math.max(max, i);
-		}
-		System.out.println(max);
-		
+		System.out.println(dp[x]);
 
 	}
-	
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
@@ -69,5 +52,4 @@ public class DMOJLongestPath {
 	static String readLine() throws IOException {
 		return br.readLine().trim();
 	}
-
 }
