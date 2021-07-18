@@ -20,10 +20,10 @@ public class DMOJPickIt3 {
 			}
 			
 			
-			for(int len=2; len<n; len++) {
-				for(int L=1; L+len<=n; L++) {
-					int R = L + len;
-					for(int m = L+1; m < R; m++) {
+			for(int len=2; len<n; len++) { //enumerate (to list out)
+				for(int L=1; L+len<=n; L++) { //enumeration starting point
+					int R = L + len; //interval end
+					for(int m = L+1; m < R; m++) { //The state transition equation is constructed by enumerating the partition points
 						dp[L][R] = Math.max(dp[L][R], a[L] + a[m] + a[R] + dp[L][m] + dp[m][R]);
 					}
 						
