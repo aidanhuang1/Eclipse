@@ -4,75 +4,70 @@ public class CCCBridgeCrossing {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
+	
+	/*
+	Let dp[i] be the earliest possible time when person i is about to cross
 
-	/*dp[i] is the earliest possible time that person i is about to cross
-	 *
+	essentially all the various combinations are tested in the following
+	order (assuming m = 3 for example)
+	a
+	ab
+	abc
+
+	a b
+	a bc
+	a bcd
+
+	ab c
+	ab cd
+	ab cde
+	...
 	 */
+
+
+
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int m = readInt(), q = readInt(); //m is the size of the group that can be on the bridge, q is the length of the queue waiting to cross
-		String[] queueperson = new String[101];
-		int[] queuetime = new int[101], path = new int[101];
-		int[][] dp = new int[101][21];
-		
-		for (int i=1; i<=q; i++) {
-			queueperson[i] = readLine();
-			queuetime[i] = readInt();
+		int m = readInt(), q = readInt(); 
+		String[] person = new String[101];
+		int[] time = new int[101], dp = new int[101], group = new int[101];
+		for (int i=0; i<q; i++) {
+			person[i] = readLine();
+			time[i] = readInt();
 		}
-		
-		for (int i = 1; i <= q; i++)
-		{
-			for (int j = 1; j <= m; j++)
-			{
-				if (j == 1)
-				{
-					dp[i][j] = dp[i - 1][1] + queuetime[i];
-					path[i] = 1;
-				}
-				else
-				{
-					int slowest = queuetime[i];
-					int best = Integer.MAX_VALUE;
-					for (int k = 1; k <= j && i-k+1 >=1; k++) //travers all k possible group mates
-					{
-						slowest = Math.max(slowest, queuetime[i - k + 1]);
-						if (best > dp[i - k][j] + slowest)
-						{
-							best = dp[i - k][j] + slowest;
-							path[i] = k;
-
-						}
+		Arrays.fill(dp, Integer.MAX_VALUE/10);
+		dp[0] = 0;
+		for (int i = 0; i < q; i++) { 
+			int s = 0;
+			for (int j = 0; j < m; j++) { 
+				if (i + j <= q) {
+					s = Math.max(s, time[i + j]);
+					if (dp[i] + s < dp[i + j + 1]) {
+						dp[i + j + 1] = dp[i] + s;
+						group[i + j + 1] = i;
 					}
-					dp[i][j] = best;
 				}
-
 			}
 		}
-
-		Stack <String> s = new Stack<>();
-		int num = path[q];
-		int person = q;
-
-		while (person > 0) {
-			String tmp = queueperson[person];
-			for (int i = 1; i < num; i++)
-			{
-				tmp = queueperson[person - i] + " " + tmp;
+		
+		ArrayList<Integer> order = new ArrayList<>();
+		int cur = q;
+		while (true) {
+			order.add(cur);
+			if (cur == 0) break;
+			cur = group[cur];
+		}
+		Collections.reverse(order);
+		
+		System.out.println("Total Time: "+ dp[q]);
+		for (int i = 0; i < order.size() - 1; i++){
+			for (int j = order.get(i); j < order.get(i+1); j++){
+				System.out.print(person[j]+" ");
 			}
-			s.push(tmp);
-
-			person -= num;
-			if (person <= 0)
-				continue;
-			num = path[person];
+			System.out.println();
 		}
 
-		System.out.println("Total Time: "+dp[q][m]+"\n");
-		while (!s.empty())
-		{
-			System.out.println(s.pop()+ "\n");
-		}
 	}
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
