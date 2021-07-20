@@ -12,7 +12,7 @@ public class DMOJPickIt {
 	 */
 	
 	public static int search(int l, int r) {
-		int temp = 0;
+		int temp = 0;	
 		if (l==r) {
 			return 0;
 		}
@@ -44,6 +44,9 @@ public class DMOJPickIt {
 				Arrays.fill(i, -1);
 			}
 			System.out.println(search(0, n-1));
+			for (int[] i: dp) {
+				System.out.println(Arrays.toString(i));
+			}
 			
 		}
 	}
