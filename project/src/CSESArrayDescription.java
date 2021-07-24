@@ -19,32 +19,34 @@ public class CSESArrayDescription {
 
 			for (int j=1; j<=m; j++) {
 
-				if (i==1) {
+				if (i==1) { //if we are on the first row
 					if (numbers[i]==0 || numbers[i]==j) {
 						dp[i][j] = 1;
 					} else {
 						dp[i][j] = 0;
 					}
-				}
-				else {
+				} else {
 					if (numbers[i]==0 || numbers[i]==j) {
 						dp[i][j] = ((dp[i-1][j-1] + dp[i-1][j])%MOD + dp[i-1][j+1])%MOD;
 					} else {
 						dp[i][j] = 0;
 					}
-				}
+				} 
 			}
 		}
 		int ans = 0;
 		for (int i=1; i<=m; i++) {
-			ans =( ans +dp[n][i]) % MOD;
+			ans = (ans +dp[n][i]) % MOD;
 		}
 		System.out.println(ans);
+		for (int i[]: dp) {
+			System.out.println(Arrays.toString(i));
+		}
 
 
 
 
-		
+
 	}
 
 	static String next() throws IOException {
