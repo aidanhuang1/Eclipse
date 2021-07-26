@@ -15,8 +15,8 @@ public class DMOJMoMoney {
 			coins[i] = readInt();
 		}
 		for (int i=1; i<=n; i++) {
-			for (int j=1; j<=t; j++) {
-//				
+			for (int j=0; j<=t; j++) {
+				
 				dp[i][j] = dp[i-1][j];
 				
 				if (j-coins[i]>=0) {
@@ -24,9 +24,7 @@ public class DMOJMoMoney {
 				}
 			}
 		}
-		for (int[] i: dp) {
-			System.out.println(Arrays.toString(i));
-		}
+		System.out.println(dp[n][t]);
 
 	}
 	static String next() throws IOException {
