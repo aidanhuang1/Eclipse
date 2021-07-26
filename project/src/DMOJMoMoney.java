@@ -1,16 +1,34 @@
 import java.util.*;
 import java.io.*;
-public class Test {
+public class DMOJMoMoney {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
-
+	static final int MOD = 1000000007;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		System.out.println(232&1); //if it is odd, output 1, if it it is even, output 0
-		
-	}
+		int n = readInt(), t = readInt();
+		int[][] dp = new int[n+1][t+1];
+		dp[0][0] = 1;
+		int[] coins = new int[n+1];
+		for (int i=1; i<=n; i++) {
+			coins[i] = readInt();
+		}
+		for (int i=1; i<=n; i++) {
+			for (int j=1; j<=t; j++) {
+//				
+				dp[i][j] = dp[i-1][j];
+				
+				if (j-coins[i]>=0) {
+					dp[i][j]+=dp[i-1][j-coins[i]];	
+				}
+			}
+		}
+		for (int[] i: dp) {
+			System.out.println(Arrays.toString(i));
+		}
 
+	}
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
