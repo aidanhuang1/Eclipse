@@ -20,7 +20,6 @@ public class DMOJKnapsack2 {
 			maxvalue += value;
 		}
 		
-		
 		long[] dp = new long[maxvalue+1]; //instead of maximum value, we are finding minimum weight
 		Arrays.fill(dp, Integer.MAX_VALUE); //fill with max value because we are finding minimum weight
 		
