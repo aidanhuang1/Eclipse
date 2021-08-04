@@ -29,7 +29,7 @@ public class DMOJARomanticDinner {
 			for (int j=1; j<=M; j++) {
 				for (int k=1; k<=U; k++) {
 					if (j-T[i]>=0 && k-F[i]>=0) { //if satisfies time and food 
-						dp[i][j][k] = Math.max(dp[i][j][k], Math.max(dp[i-1][j][k], dp[i-1][j-T[i]][k-F[i]] +V[i])); //why does this relationship work? why not dp[i][j-T[i]][k]] +V[i] 
+						dp[i][j][k] = Math.max(dp[i][j][k], Math.max(dp[i-1][j][k], dp[i-1][j-T[i]][k-F[i]] +V[i])); //why does this relationship work?? why not dp[i][j-T[i]][k]] +V[i] 
 					} else {
 						dp[i][j][k] = Math.max(dp[i][j][k], dp[i-1][j][k]);
 					}
