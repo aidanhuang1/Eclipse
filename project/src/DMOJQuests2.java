@@ -1,26 +1,28 @@
 import java.util.*;
 import java.io.*;
-public class Test {
+public class DMOJQuests2 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
-	
-	public static String t(String a) {
-		System.out.println(a);
-		if (a.length()>0)
-		return t(a.substring(1, a.length()));
-		return "";
-	}
+	static final int MOD = 1000000007;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		String test = "abababababababa";
-		test = test.replaceFirst("b", "");
-		System.out.println(test);
-				
-				
-//		t(test);
-	}
+		int NPCs = readInt(), hours = readInt();
+		long[][] dp = new long[hours+1][2];
+		for (int i=1; i<=NPCs; i++) {
+			int g = readInt(), h = readInt(), q = readInt(), t = readInt();
+			for (int j=0; j<=hours; j++) {
+				if (j-h>=0) {
+					dp[j][0] = Math.max(dp[j][0], dp[j-h][1]+g);
+				}
+				if (j-t>=0) {
+					dp[j][1] = Math.max(dp[j][0], dp[j-t][1]+q);
+				}
+			}	
+		}
+		System.out.println(dp[hours][1]);
 
+	}
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
