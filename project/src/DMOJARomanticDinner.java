@@ -25,11 +25,12 @@ public class DMOJARomanticDinner {
 //			Arrays.fill(i, 0);
 //		}
 
-		for (int i=1; i<=R; i++) {
-			for (int j=1; j<=M; j++) {
-				for (int k=1; k<=U; k++) {
+		for (int i=1; i<=R; i++) { //row (restaurants)
+			for (int j=1; j<=M; j++) { //col (minutes passed)
+				for (int k=1; k<=U; k++) { //array (the size-1 is the number of units of food that can be consumed, where the maximum units is U)
 					if (j-T[i]>=0 && k-F[i]>=0) { //if satisfies time and food 
-						dp[i][j][k] = Math.max(dp[i][j][k], Math.max(dp[i-1][j][k], dp[i-1][j-T[i]][k-F[i]] +V[i])); //why does this relationship work?? why not dp[i][j-T[i]][k]] +V[i] 
+						dp[i][j][k] = Math.max(dp[i][j][k], Math.max(dp[i-1][j][k], dp[i-1][j-T[i]][k-F[i]] +V[i])); //why does this relationship work?? why not dp[i][j-T[i]][k]] +V[i] ( dp[i-1] because we are looking at our previous results from last row if any)
+						//Math.max(dp[i][j][k], Math.max(dp[i-1][j][k], dp[i-1][j-T[i]][k] +V[i])); could be used if it were unbounded knapsack, because k-F[i] depends on the previous result, and at index 0 of k, the value is 0 (meaning there is no impression value there)
 					} else {
 						dp[i][j][k] = Math.max(dp[i][j][k], dp[i-1][j][k]);
 					}
@@ -38,13 +39,13 @@ public class DMOJARomanticDinner {
 		}
 		
 		
-//		for (int[][] i: dp) {
-//			for (int[] j: i) {
-//				System.out.print(Arrays.toString(j)+" ");
-//			}
-//			System.out.println();
-//		}
-//		
+		for (int[][] i: dp) {
+			for (int[] j: i) {
+				System.out.print(Arrays.toString(j)+" ");
+			}
+			System.out.println();
+		}
+		
 		System.out.println(dp[R][M][U]);
 
 	}

@@ -1,20 +1,34 @@
 import java.util.*;
 import java.io.*;
-public class CCCCombiningRiceballs {
+public class USACOGold248 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
+	
+	//incomplete
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		int n = readInt();
-		int[] size = new int[n+1];
-		for (int i=1; i<=n; i++) {
-			size[i] = size[i-1]+readInt();
+		int[] sequence = new int[n];
+		for (int i=0; i<n; i++) {
+			sequence[i] = readInt();
 		}
-		int[][] dp = new int[n+1][n+1];
+		int ans = 0;
+		int[][] dp = new int[n][n];
+		for (int i=0; i<n; i++) {
+			dp[i][i] = sequence[i];
+			ans = Math.max(ans, sequence[i]);
+		}
 		
+		for (int i=n-1; i>=0; i--) {
+			for (int j=i+1; j<n; j++) {
+				dp[i][j] = -1;
+			}
+		}
+
 	}
+	
 	static String next() throws IOException {
 		while (st == null || !st.hasMoreTokens())
 			st = new StringTokenizer(br.readLine().trim());
@@ -40,4 +54,5 @@ public class CCCCombiningRiceballs {
 	static String readLine() throws IOException {
 		return br.readLine().trim();
 	}
+
 }
