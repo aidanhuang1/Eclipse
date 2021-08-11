@@ -4,21 +4,16 @@ public class Test {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	
-	public static String t(String a) {
-		System.out.println(a);
-		if (a.length()>0)
-		return t(a.substring(1, a.length()));
-		return "";
+	static class Edge {
+		int to;
+		public Edge(int to) {
+			this.to = to;
+		}
 	}
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		String test = "abababababababa";
-		test = test.replaceFirst("b", "");
-		System.out.println(test);
-				
-				
-//		t(test);
+		
 	}
 
 	static String next() throws IOException {

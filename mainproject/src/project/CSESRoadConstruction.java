@@ -6,6 +6,7 @@ public class CSESRoadConstruction {
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
 	public static int[] disjoint;
+	public static int[] size;
 	
 	/*Disjoint Set Union */
 
@@ -38,24 +39,19 @@ public class CSESRoadConstruction {
 		return -disjoint[v];
 	}
 	
-	
-	
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
-		int n = readInt(), m = readInt();
+		int n = readInt(), m = readInt(), max = 1;
 		disjoint = new int[n];
-		Arrays.fill(disjoint, -1);
-		int largestcomp = 1;
-		while (m-- >0) {
-			int a = readInt()-1, b = readInt()-1;
-			int newsize = union(a,b);
-			if (newsize !=0) {
+		while (m-->0) {
+			int temp = union(readInt()-1, readInt()-1);
+			if (temp!=0) { //in same component
 				n--;
-				largestcomp = Math.max(largestcomp, newsize);
+				max = Math.max(max, temp);
 			}
-			System.out.println(n+" "+largestcomp);
+			System.out.println(n+" "+max);
 		}
 		
 	}
