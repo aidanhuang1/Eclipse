@@ -1,11 +1,12 @@
+package DataStructures;
 import java.util.*;
 import java.io.*;
-public class Iterators {
+public class HashSets {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static final int MOD = 1000000007;
 	
-	//In Java, iterators are helpful for looping through sets.
+	//Hashsets store simply keys(elements)
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
